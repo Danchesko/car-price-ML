@@ -1,0 +1,14 @@
+dependencies:
+    - python=3.6
+    - numpy
+    - scipy
+    - scikit-learn=0.19
+    - jupyter
+    - os
+    - requests
+    - pandas
+    - seaborn 
+    - click
+    - pip:
+        - watermark
+        - pytest
