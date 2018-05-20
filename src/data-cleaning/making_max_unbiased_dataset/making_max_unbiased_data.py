@@ -1,12 +1,4 @@
 import pandas as pd
-from sklearn.preprocessing import Imputer
-import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import LabelEncoder
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestRegressor
 import os
 import sys
 sys.path.append("../imputing_nans")
