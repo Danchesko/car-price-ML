@@ -2,38 +2,38 @@ import pandas as pd
 import os 
 import sys
 sys.path.append("../../")
-from paths import * 
+import paths
 
 ENCODING_XLSX = "utf-8-sig"
 
-def get_raw_dataset(path = RAW_DATASET_PATH):
+def get_raw_dataset(path = paths.RAW_DATASET_PATH):
     return read_excel(path)
 
-def get_cleaned_outliers_dataset(path = CLEANED_OUTLIERS_DATASET_PATH):
+def get_cleaned_outliers_dataset(path = paths.CLEANED_OUTLIERS_DATASET_PATH):
     return read_excel(path)
     
-def get_dropped_nans_dataset(path = DROPPED_NANS_DATASET_PATH):
+def get_dropped_nans_dataset(path = paths.DROPPED_NANS_DATASET_PATH):
     return read_excel(path)
 
-def get_imputed_nans_dataset(path = IMPUTED_NANS_DATASET_PATH):
+def get_imputed_nans_dataset(path = paths.IMPUTED_NANS_DATASET_PATH):
     return read_excel(path)
 
-def get_processed_dataset(path = PROCESSED_DATASET_PATH):
+def get_processed_dataset(path = paths.PROCESSED_DATASET_PATH):
     return read_excel(path)
 
-def save_raw_dataset(dataset,path = RAW_DATASET_PATH):
+def save_raw_dataset(dataset,path = paths.RAW_DATASET_PATH):
     return (save_dataset(dataset,path))
 
-def save_cleaned_outliers_dataset(dataset,path = CLEANED_OUTLIERS_DATASET_PATH ):
+def save_cleaned_outliers_dataset(dataset,path = paths.CLEANED_OUTLIERS_DATASET_PATH ):
     return (save_dataset(dataset,path))
 
-def save_dropped_nans_dataset(dataset,path = DROPPED_NANS_DATASET_PATH):
+def save_dropped_nans_dataset(dataset,path = paths.DROPPED_NANS_DATASET_PATH):
     return(save_dataset(dataset,path))
 
-def save_imputed_nans_dataset(dataset,path = IMPUTED_NANS_DATASET_PATH):
+def save_imputed_nans_dataset(dataset,path = paths.IMPUTED_NANS_DATASET_PATH):
     return(save_dataset(dataset,path))
 
-def save_processed_dataset(dataset,path = PROCESSED_DATASET_PATH):
+def save_processed_dataset(dataset,path = paths.PROCESSED_DATASET_PATH):
     return(save_dataset(dataset,path))
 
 def save_dataset(dataset,path):
@@ -45,8 +45,6 @@ def save_dataset(dataset,path):
         return False
 
 def read_excel(path):
-    print(path)
-    print(os.path.exists(path))
     if os.path.exists(path):
         return pd.read_excel(path)
     else:

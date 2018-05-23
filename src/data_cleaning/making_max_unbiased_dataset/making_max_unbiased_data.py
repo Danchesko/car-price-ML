@@ -1,38 +1,24 @@
 import pandas as pd
-import os
 import sys
-sys.path.append("../imputing_nans")
-from data_impute import get_train_test,get_train,get_test,impute_color,impute_fuel,get_y_pred
+sys.path.append("../../")
+from data_extraction import load_or_save_dataset 
+from data_cleaning.cleaning_outliers.constants import Car
+from data_cleaning.utils.get_train_test_for_impute import (get_train_test,impute_color,
+                                                           impute_fuel,get_y_pred)
 
-REL_PATH_FOR_IMPUTED_DATA = "../../../data/interim/cars_max_unbiased.xlsx"
-REL_PATH_CLEANED_OUTLIERS = "../../../data/interim/cars_cleaned_outliers.xlsx"
-ENCODING_XLSX = 'utf-8-sig'
+columns_to_drop = [Car.YEAR, Car.TRANSMISSION, Car.CAPACITY, Car.DRIVE, Car.WHEEL, Car.CARCASS]
+column_to_impute = Car.MILEAGE
+cols = [Car.YEAR, Car.TRANSMISSION, Car.CAPACITY, Car.DRIVE,Car.CARCASS,Car.FUEL,Car.PRICE]
+column_to_drop = Car.POWER
 
-columns_to_drop = ['Год выпуска', 'КПП', 'Объём', 'Привод', 'Руль', 'Тип кузова']
-column_to_impute = "Пробег"
-cols = ['Год выпуска','КПП','Объём','Привод','Тип кузова','Топливо',"Цена"]
-column_to_drop = "Мощность"
-
-
-def main():
-    if not os.path.isfile(REL_PATH_FOR_IMPUTED_DATA):
-        data = read_data(REL_PATH_CLEANED_OUTLIERS)
-        data = drop_features(data)
-        data = impute_features(data)
-        write_to_excel(data)
+def impute_dataset(df = load_or_save_dataset.get_cleaned_outliers_dataset(),path = None):
+    df = drop_features(df)
+    df = impute_features(df)
+    if path == None:
+        return load_or_save_dataset.save_processed_dataset(df)
     else:
-        print("File already exists")
-    
-    
-def read_data(path):
-    cars_data = pd.read_excel(path)
-    cars_data = cars_data.dropna(thresh=5)
-    return cars_data
+        return load_or_save_dataset.save_processed_dataset(df,path)
 
-def write_to_excel(data):
-    writer = pd.ExcelWriter(REL_PATH_FOR_IMPUTED_DATA)
-    data.to_excel(writer,"Sheet1",encoding=ENCODING_XLSX,index=False)
-    
 def drop_features(data):
     data = data.drop(columns = [column_to_drop])
     data = data.dropna(subset = columns_to_drop)
@@ -50,6 +36,3 @@ def knn_impute_mileage(data):
     y_pred = pd.Series(y_pred,index=y_test.index,name = y_test.name)
     data.loc[data[~data[column_to_impute].notnull()].index,column_to_impute] = y_pred
     return data
-
-if __name__ == "__main__":
-    main()

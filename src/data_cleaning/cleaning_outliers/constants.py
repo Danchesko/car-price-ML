@@ -11,6 +11,11 @@ class Car():
     POWER = "Мощность"
     CAPACITY = "Объём"
     YEAR = "Год выпуска"
+    CARCASS = "Тип кузова"
+    TRANSMISSION = "КПП"
+    DRIVE = "Привод"
+    WHEEL = "Руль"
+    FUEL = "Топливо"
     MIN_YEAR = 2008
     MAX_MONEY_FOR_MIN_YEAR = 40000    
     
