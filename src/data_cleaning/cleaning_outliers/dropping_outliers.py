@@ -1,33 +1,17 @@
 import pandas as pd
-import os
 import numpy as np
+import sys 
+sys.path.append("../../data_extraction")
 from constants import Car
+import load_or_save_dataset
 
-DATA_LOC = "../../../data/raw/cars_raw_data.csv"
-DATA_TO_EXCEL_LOC = "../../../data/interim/cars_cleaned_outliers.xlsx"
-NO_RAW_FILE_MESSAGE = "Couldn't find a file to transform"
-TRANSFORMED_FILE_EXISTS_MESSAGE = "Transformed file already exists in the path"
+def clean_data(df = load_or_save_dataset.get_raw_dataset(),path = None):
+    df = make_changes(df)
+    if path == None:
+        return load_or_save_dataset.save_cleaned_outliers_dataset(df)
+    else:
+        return load_or_save_dataset.save_cleaned_outliers_dataset(df,path)
 
-def main():
-    if not os.path.exists(DATA_TO_EXCEL_LOC):
-        df = open_data(DATA_LOC)
-        df = make_changes(df)
-        write_to_csv(df)
-    else:
-        print(TRANSFORMED_FILE_EXISTS_MESSAGE)
-        
-def open_data(path):
-    if os.path.exists(path):
-        df = pd.read_csv(path)
-        return df
-    else:
-        print(NO_RAW_FILE_MESSAGE)
-        exit(-1)
-    
-def write_to_csv(df):
-    writer = pd.ExcelWriter(DATA_TO_EXCEL_LOC)
-    df.to_excel(writer,"Sheet1",encoding="utf-8-sig",index=False)   
-    
 def make_changes(df):
     df = drop_data(df)
     df = replace_outliers(df)
@@ -70,6 +54,3 @@ def make_capacity_outliers_nan(df):
 def make_mileage_outliers_nan(df):
     df.loc[df[df[Car.MILEAGE]>Car.MAX_MILEAGE].index,Car.MILEAGE] = np.nan
     return df
-
-if __name__ == "__main__":
-    main()
