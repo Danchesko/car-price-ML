@@ -2,23 +2,20 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import pandas as pd 
-import os
+import sys
+sys.path.append("../data_extraction")
+import load_or_save_dataset
 
 PAGE_URL = "https://cars.kg/offers/%d.html"
-REL_PATH_FOR_CSV = "../../data/raw/cars_test_data.csv"
-FILE_EXISTS_MESSAGE = "File already exists"
 PARAMS_TO_CLEAN=['Год выпуска','Пробег','Объём','Мощность','Цена']
 PARAM_PRICE = "Цена"
 
-def main(start = 866000, stop = 867500):
-    if not os.path.isfile(REL_PATH_FOR_CSV):
-        write_to_csv(start,stop)
-    else:
-        print(FILE_EXISTS_MESSAGE)
-        
-def write_to_csv(start,stop):
+def write_to_csv(start,stop,path = None):
     df = make_data_frame(start,stop)
-    df.to_csv(REL_PATH_FOR_CSV, index=False,encoding="utf-8-sig")
+    if path==None:
+        load_or_save_dataset.save_raw_dataset(df)
+    else:
+        load_or_save_dataset.save_raw_dataset(df,path)
     
 def make_data_frame(start,stop):  
     list_of_dicts = make_list_of_dicts(start,stop)
@@ -71,9 +68,6 @@ def clean_dict(dictionary):
             dictionary[param] =float(re.findall(r"[-+]?\d*\.\d+|\d+", dictionary[param])[0])
     return dictionary
 
-        
-if __name__=="__main__":
-    main()
         
         
         
