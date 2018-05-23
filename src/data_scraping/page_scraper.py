@@ -10,12 +10,18 @@ PAGE_URL = "https://cars.kg/offers/%d.html"
 PARAMS_TO_CLEAN=['Год выпуска','Пробег','Объём','Мощность','Цена']
 PARAM_PRICE = "Цена"
 
-def write_to_csv(start,stop,path = None):
+def write_to_csv(start=865990,stop=866000,path = None):
+    """Function return True if data was saved in a given or 
+    default file with 'xlsx' extension, False otherwise.
+    Start, stop arguments are arguments for building an html path
+    for scraping. There are default, although can be adjusted,but 
+    webpage content knowledge(cars.kg) is needed to change start, stop arguments
+    """
     df = make_data_frame(start,stop)
     if path==None:
-        load_or_save_dataset.save_raw_dataset(df)
+        return load_or_save_dataset.save_raw_dataset(df)
     else:
-        load_or_save_dataset.save_raw_dataset(df,path)
+        return load_or_save_dataset.save_raw_dataset(df,path)
     
 def make_data_frame(start,stop):  
     list_of_dicts = make_list_of_dicts(start,stop)

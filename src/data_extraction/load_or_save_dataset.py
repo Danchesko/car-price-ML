@@ -1,12 +1,9 @@
 import pandas as pd
 import os 
+import sys
+sys.path.append("../../")
+from paths import * 
 
-DATA_PATH = "../../data/"
-RAW_DATASET_PATH = DATA_PATH + "raw/cars_raw_data.xlsx"
-CLEANED_OUTLIERS_DATASET_PATH = DATA_PATH + "interim/cars_cleaned_outliers.xlsx"
-DROPPED_NANS_DATASET_PATH = DATA_PATH + "interim/cars_dropped.xlsx"
-IMPUTED_NANS_DATASET_PATH = DATA_PATH + "interim/cars_imputed.xlsx"
-PROCESSED_DATASET_PATH =  DATA_PATH +"processed/cars_max_unbiased.xlsx"
 ENCODING_XLSX = "utf-8-sig"
 
 def get_raw_dataset(path = RAW_DATASET_PATH):
@@ -48,6 +45,8 @@ def save_dataset(dataset,path):
         return False
 
 def read_excel(path):
+    print(path)
+    print(os.path.exists(path))
     if os.path.exists(path):
         return pd.read_excel(path)
     else:
