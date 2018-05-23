@@ -3,13 +3,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 from sklearn.preprocessing import StandardScaler
 
-def get_train_test(data,test_size):
+def get_train_test(data,test_size=0.2):
     data = shuffle(data)
     X_train,X_test,y_train,y_test = train_test_split(get_X(data),get_y(data),test_size = test_size)
     X_train,X_test = make_dummies(X_train,X_test)
     return X_train,X_test,y_train,y_test
 
-def get_train_test_std(data,test_size):
+def get_train_test_std(data,test_size=0.2):
     X_train,X_test,y_train,y_test = get_train_test(data,test_size)
     X_train,X_test = make_dummies_std(X_train,X_test)
     return X_train,X_test,y_train, y_test

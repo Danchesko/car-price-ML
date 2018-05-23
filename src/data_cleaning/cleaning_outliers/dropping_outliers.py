@@ -6,6 +6,10 @@ from constants import Car
 import load_or_save_dataset
 
 def clean_data(df = load_or_save_dataset.get_raw_dataset(),path = None):
+    """Function return True if data was saved in a given or 
+    default file with 'xlsx' extension, False otherwise.
+    df arguments is argument for providing a dataset to clean, 
+    default df is scraped raw data in data folder"""
     df = make_changes(df)
     if path == None:
         return load_or_save_dataset.save_cleaned_outliers_dataset(df)
