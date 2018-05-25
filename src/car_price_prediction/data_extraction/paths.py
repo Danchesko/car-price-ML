@@ -1,5 +1,7 @@
-import os 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+import os
+from pathlib import Path
+
+ROOT_DIR = Path(os.path.dirname(os.path.abspath(__file__))).parent.parent.parent
 DATA_PATH = os.path.join(ROOT_DIR,"data")
 
 RAW_DATASET_PATH = os.path.join(DATA_PATH, os.path.normpath("raw/cars_raw_data.xlsx"))

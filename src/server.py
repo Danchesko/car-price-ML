@@ -11,8 +11,6 @@ def index():
 def prediction():
     if request.method == 'POST':
         print('hello',json.loads(request.data)['year'])
-        
-        
         return '40'
     
 if __name__ == '__main__':

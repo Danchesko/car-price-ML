@@ -1,9 +1,6 @@
-import pandas as pd
 import numpy as np
-import sys 
-sys.path.append("../../data_extraction")
-from constants import Car
-import load_or_save_dataset
+from src.car_price_prediction.data_extraction import load_or_save_dataset
+from src.car_price_prediction.constants import Car
 
 def clean_data(df = load_or_save_dataset.get_raw_dataset(),path = None):
     """Function return True if data was saved in a given or 

@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd 
 import sys
-sys.path.append("../data_extraction")
-import load_or_save_dataset
+sys.path.append("../")
+from data_extraction import load_or_save_dataset
 
 PAGE_URL = "https://cars.kg/offers/%d.html"
 PARAMS_TO_CLEAN=['Год выпуска','Пробег','Объём','Мощность','Цена']
