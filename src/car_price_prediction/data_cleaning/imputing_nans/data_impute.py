@@ -4,7 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 import sys
 sys.path.append("../../")
 from data_extraction import load_or_save_dataset
-from data_cleaning.cleaning_outliers.constants import Car
+from constants import Car
 from data_cleaning.utils.get_train_test_for_impute import (get_train_test,get_y_pred,
                                                            impute_color,impute_fuel)
 
