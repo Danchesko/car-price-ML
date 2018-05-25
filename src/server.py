@@ -10,7 +10,7 @@ def index():
 @app.route('/api/prediction',methods = ['POST'])
 def prediction():
     if request.method == 'POST':
-        print('hello',json.loads(request.data)['hui'])
+        print('hello',json.loads(request.data)['year'])
         
         
         return '40'

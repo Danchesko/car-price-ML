@@ -1,7 +1,5 @@
 import pandas as pd
 import os 
-import sys
-sys.path.append("../../")
 import paths
 
 ENCODING_XLSX = "utf-8-sig"
