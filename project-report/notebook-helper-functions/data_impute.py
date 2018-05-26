@@ -1,11 +1,9 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-import sys
-sys.path.append("../../")
-from data_extraction import load_or_save_dataset
-from constants import Car
-from data_cleaning.utils.get_train_test_for_impute import (get_train_test,get_y_pred,
+from car_price_prediction.data_extraction import load_or_save_dataset
+from car_price_prediction.constants import Car
+from car_price_prediction.data_cleaning.utils.get_train_test_for_impute import (get_train_test,get_y_pred,
                                                            impute_color,impute_fuel)
 
 def impute_dataset(df = load_or_save_dataset.get_cleaned_outliers_dataset(),path = None):

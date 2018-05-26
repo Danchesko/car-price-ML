@@ -1,6 +1,6 @@
 import pandas as pd
 import os 
-import paths
+from car_price_prediction.utils import paths
 
 ENCODING_XLSX = "utf-8-sig"
 
@@ -8,12 +8,6 @@ def get_raw_dataset(path = paths.RAW_DATASET_PATH):
     return read_excel(path)
 
 def get_cleaned_outliers_dataset(path = paths.CLEANED_OUTLIERS_DATASET_PATH):
-    return read_excel(path)
-    
-def get_dropped_nans_dataset(path = paths.DROPPED_NANS_DATASET_PATH):
-    return read_excel(path)
-
-def get_imputed_nans_dataset(path = paths.IMPUTED_NANS_DATASET_PATH):
     return read_excel(path)
 
 def get_processed_dataset(path = paths.PROCESSED_DATASET_PATH):
@@ -24,12 +18,6 @@ def save_raw_dataset(dataset,path = paths.RAW_DATASET_PATH):
 
 def save_cleaned_outliers_dataset(dataset,path = paths.CLEANED_OUTLIERS_DATASET_PATH ):
     return (save_dataset(dataset,path))
-
-def save_dropped_nans_dataset(dataset,path = paths.DROPPED_NANS_DATASET_PATH):
-    return(save_dataset(dataset,path))
-
-def save_imputed_nans_dataset(dataset,path = paths.IMPUTED_NANS_DATASET_PATH):
-    return(save_dataset(dataset,path))
 
 def save_processed_dataset(dataset,path = paths.PROCESSED_DATASET_PATH):
     return(save_dataset(dataset,path))

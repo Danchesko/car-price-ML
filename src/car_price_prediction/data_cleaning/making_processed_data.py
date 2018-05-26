@@ -1,9 +1,9 @@
 import pandas as pd
 import sys
 sys.path.append("../../")
-from data_extraction import load_or_save_dataset 
-from constants import Car
-from data_cleaning.utils.get_train_test_for_impute import (get_train_test,impute_color,
+from car_price_prediction.data_extraction import load_or_save_dataset 
+from car_price_prediction.constants import Car
+from car_price_prediction.data_cleaning.utils.get_train_test_for_impute import (get_train_test,impute_color,
                                                            impute_fuel,get_y_pred)
 
 columns_to_drop = [Car.YEAR, Car.TRANSMISSION, Car.CAPACITY, Car.DRIVE, Car.WHEEL, Car.CARCASS]

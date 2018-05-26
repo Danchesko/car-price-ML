@@ -1,43 +1,32 @@
-import sys
-sys.path.append("../model_selection")
 from sklearn.ensemble import RandomForestRegressor
-from get_X_and_y import get_train_test
+from car_price_prediction.data_extraction.get_X_and_y import get_train_test
 from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import AdaBoostRegressor
-from mlxtend.regressor import StackingRegressor
-from sklearn.linear_model import LinearRegression
-import pandas as pd
 import pickle
 import os
 
-pickle_path = '../../models/'
-dataset_path = "../../data/processed/cars_max_unbiased.xlsx"
-params_grid = {'randomforestregressor__n_estimators':[300],
-               'adaboostregressor__n_estimators':[500],
-               'adaboostregressor__learning_rate':[3e-08,1e-08,3e-07],
-               'adaboostregressor__loss':['linear']}
-PARAMETER_EXISTS_MESSAGE = "Best estimator's parameters already exist"
+params_grid = {'n_estimators':[10,30]}
 
-def main():
-    X_train,X_test,y_train,y_test = get_train_test(dataset_path,test_size=0.2)
+def get_forest_params(dataset):
+    X_train,X_test,y_train,y_test = get_train_test(dataset)
     forest = RandomForestRegressor()
-    booster = AdaBoostRegressor()
-    stacking =  StackingRegressor(regressors=[forest,booster],meta_regressor=LinearRegression())
-    grid = GridSearchCV(stacking,params_grid,scoring="neg_mean_absolute_error",cv=5)
+    grid = GridSearchCV(forest,params_grid,scoring="neg_mean_absolute_error",cv=5)
     grid.fit(X_train,y_train)
-    save('grid_best_params.cav',grid.best_params_)
-    save('grid_best_estimator.cav',grid.best_estimator_)
-    save('grid_best_score.cav',grid.best_score_)
+    return grid.best_params_
 
 
-def save(path,model):
-    if not os.path.exists(pickle_path+path):
-        with open(pickle_path+path,'wb') as sfile:
-            pickle.dump(model, sfile,pickle.HIGHEST_PROTOCOL)
+def save(params,path):
+    if not os.path.exists(path):
+        with open(path,'wb') as sfile:
+            pickle.dump(params, sfile,pickle.HIGHEST_PROTOCOL)
     else:
-        print(PARAMETER_EXISTS_MESSAGE)
+        return None
 
-if __name__=="__main__":
-    main()
-
-
+def load(path):
+    if os.path.exists(path):
+        with open(path,'rb') as lfile:
+            estimator = pickle.load(lfile)
+            return estimator
+    else:
+        return None
+            
+        

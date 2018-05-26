@@ -16,6 +16,8 @@ class Car():
     DRIVE = "Привод"
     WHEEL = "Руль"
     FUEL = "Топливо"
+    BRAND = "Марка"
+    URGENCY = "Спешность"
     MIN_YEAR = 2008
     MAX_MONEY_FOR_MIN_YEAR = 40000    
     
