@@ -1,16 +1,17 @@
+import urllib
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import re
 import pandas as pd 
-import sys
-sys.path.append("../")
-from data_extraction import load_or_save_dataset
+import re
+from car_price_prediction.utils import load_or_save_dataset
+from car_price_prediction.constants import Car
 
 PAGE_URL = "https://cars.kg/offers/%d.html"
-PARAMS_TO_CLEAN=['Год выпуска','Пробег','Объём','Мощность','Цена']
-PARAM_PRICE = "Цена"
+PARAMS_TO_CLEAN=[Car.YEAR,Car.MILEAGE,Car.CAPACITY,Car.POWER,Car.PRICE]
+PARAM_PRICE, PARAM_BRAND, PARAM_URGENCY = Car.PRICE, Car.BRAND, Car.URGENCY
+failed_pages = []
 
-def write_to_csv(start=865990,stop=866000,path = None):
+def write_to_xlsx(start=840000,stop=873000,path = None):
     """Function return True if data was saved in a given or 
     default file with 'xlsx' extension, False otherwise.
     Start, stop arguments are arguments for building an html path
@@ -40,7 +41,8 @@ def make_list_of_dicts(start,stop):
     return list_of_dicts
 
 def get_dict(address):    
-    page_contents = open_page(PAGE_URL%address) 
+    page_contents = open_page(PAGE_URL%address)
+    print(address)
     if page_contents!=None:
         return analyze_contents(page_contents)
     
@@ -49,15 +51,34 @@ def open_page(page):
         page = urlopen(page)
         page_contents=page.read().decode("utf-8")
         return page_contents
-    except:
+    except urllib.error.HTTPError:
+        #returns None if page doesn't exist
+        return None
+    except Exception as excpt:
+        failed_pages.append(page)
         return None
     
 def analyze_contents(page_contents):
     soup = BeautifulSoup(page_contents,"html.parser")
     data = create_dict(soup.find_all("dl","chars-item"))
-    price = soup.find('span', attrs={'class':'card-price-main'}).text.strip()
-    data[PARAM_PRICE] = price
+    data[PARAM_BRAND] = get_model(soup)
+    data[PARAM_PRICE] = get_price(soup)
+    data[PARAM_URGENCY] = get_urgency(soup)
     return clean_dict(data)
+
+def get_urgency(soup):
+    temp_data = soup.find_all("span","tag is-red")
+    if len(temp_data)==0:
+        return None
+    return temp_data[0].text.strip().lower()
+    
+def get_model(soup):
+    temp_data = soup.find_all("li","breadcrumbs-item")
+    return temp_data[2].span.text.strip().lower()
+    
+def get_price(soup):
+    price = soup.find('span', attrs={'class':'card-price-main'}).text.strip()
+    return price
     
 def create_dict(samples):
     parameters={}
@@ -74,7 +95,5 @@ def clean_dict(dictionary):
             dictionary[param] =float(re.findall(r"[-+]?\d*\.\d+|\d+", dictionary[param])[0])
     return dictionary
 
-        
-        
         
         
