@@ -1,1 +1,199 @@
-<h1> Ebat Andryuha pidor</h1>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Car price prediction</title>
+    <meta name="description" content="Car price prediction">
+    <meta name="author" content="Daniiar">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div style="width: 500px; margin: 0 auto;">
+        <form onsubmit="onSubmitClick(event)">
+            <div class="form-group">
+                <label for="brand">Марка</label>
+                <select required class="form-control" id="brand">
+                    <option value="acura">acura</option>
+                    <option value="audi">audi</option>
+                    <option value="bmw">bmw</option>
+                    <option value="cadillac">cadillac</option>
+                    <option value="chevrolet">chevrolet</option>
+                    <option value="chrysler">chrysler</option>
+                    <option value="citroen">citroen</option>
+                    <option value="daewoo">daewoo</option>
+                    <option value="daihatsu">daihatsu</option>
+                    <option value="daimler">daimler</option>
+                    <option value="dodge">dodge</option>
+                    <option value="fiat">fiat</option>
+                    <option value="ford">ford</option>
+                    <option value="hafei">hafei</option>
+                    <option value="honda">honda</option>
+                    <option value="hummer">hummer</option>
+                    <option value="hyundai">hyundai</option>
+                    <option value="infiniti">infiniti</option>
+                    <option value="isuzu">isuzu</option>
+                    <option value="iveco">iveco</option>
+                    <option value="jaguar">jaguar</option>
+                    <option value="jeep">jeep</option>
+                    <option value="kia">kia</option>
+                    <option value="land rover">land rover</option>
+                    <option value="lexus">lexus</option>
+                    <option value="maserati">maserati</option>
+                    <option value="mazda">mazda</option>
+                    <option value="mercedes-benz">mercedes-benz</option>
+                    <option value="mercury">mercury</option>
+                    <option value="mini">mini</option>
+                    <option value="mitsubishi">mitsubishi</option>
+                    <option value="nissan">nissan</option>
+                    <option value="opel">opel</option>
+                    <option value="peugeot">peugeot</option>
+                    <option value="porsche">porsche</option>
+                    <option value="raf">raf</option>
+                    <option value="ravon">ravon</option>
+                    <option value="reliant">reliant</option>
+                    <option value="renault">renault</option>
+                    <option value="rover">rover</option>
+                    <option value="samsung">samsung</option>
+                    <option value="saturn">saturn</option>
+                    <option value="seat">seat</option>
+                    <option value="skoda">skoda</option>
+                    <option value="smart">smart</option>
+                    <option value="ssangyong">ssangyong</option>
+                    <option value="subaru">subaru</option>
+                    <option value="suzuki">suzuki</option>
+                    <option value="toyota">toyota</option>
+                    <option value="volkswagen">volkswagen</option>
+                    <option value="volvo">volvo</option>
+                    <option value="авто">авто</option>
+                    <option value="ваз (lada)">ваз (lada)</option>
+                    <option value="газ">газ</option>
+                    <option value="заз">заз</option>
+                    <option value="зил">зил</option>
+                    <option value="камаз">камаз</option>
+                    <option value="уаз">уаз</option>
+                    <option value="другое" selected>другое</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="manufactered-year">Год выпуска</label>
+                <input type="text" required class="form-control" id="year" pattern="^(19|20)\d{2}$" placeholder="Введите год выпуска">
+            </div>
+
+            <div class="form-group">
+                <label for="mileage">Пробег</label>
+                <input type="number" required class="form-control" id="mileage" min="0" max="800000" placeholder="Введите пробег">
+            </div>
+
+            <div class="form-group">
+                <label for="capacity">Объем</label>
+                <input type="number" required class="form-control" id="capacity" step="0.1" min="0.7" max="6.0" placeholder="Введите объем">
+            </div>
+
+            <div class="form-group">
+                <label for="wheel">Руль</label>
+                <select required class="form-control" id="wheel">
+                    <option value="правый">правый</option>
+                    <option value="левый">левый</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fuel">Тип топлива</label>
+                <select required class="form-control" id="fuel-type">
+                    <option value="другое" selected>другое</option>
+                    <option value="дизель">дизель</option>
+                    <option value="бензин">бензин</option>
+                    <option value="газ-бензин">газ-бензин</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="color">Цвет</label>
+                <select required class="form-control" id="color">
+                    <option value="баклажан">баклажан</option>
+                    <option value="бежевый">бежевый</option>
+                    <option value="белый">белый</option>
+                    <option value="белый жемчуг">белый жемчуг</option>
+                    <option value="бирюзовый">бирюзовый</option>
+                    <option value="бордовый">бордовый</option>
+                    <option value="вишневый">вишневый</option>
+                    <option value="голубой">голубой</option>
+                    <option value="дипломат">дипломат</option>
+                    <option value="другое">другое</option>
+                    <option value="желтый">желтый</option>
+                    <option value="зеленый">зеленый</option>
+                    <option value="золотой">золотой</option>
+                    <option value="коричневый">коричневый</option>
+                    <option value="красный">красный</option>
+                    <option value="мокрый асфальт">мокрый асфальт</option>
+                    <option value="морская волна">морская волна</option>
+                    <option value="оранжевый">оранжевый</option>
+                    <option value="пурпурный">пурпурный</option>
+                    <option value="серебряный">серебряный</option>
+                    <option value="серый">серый</option>
+                    <option value="синий">синий</option>
+                    <option value="смарагд">смарагд</option>
+                    <option value="темно-синий">темно-синий</option>
+                    <option value="фиолетовый">фиолетовый</option>
+                    <option value="черный">черный</option>
+                    <option value="другое" selected>другое</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="carcass">Тип кузова</label>
+                <select required class="form-control" id="carcass">
+                    <option value="седан">седан</option>
+                    <option value="внедорожник / пикап">внедорожник / пикап</option>
+                    <option value="универсал">универсал</option>
+                    <option value="кроссовер">кроссовер</option>
+                    <option value="хэтчбек">хэтчбек</option>
+                    <option value="минивэн / бус">минивэн / бус</option>
+                    <option value="кабриолет">кабриолет</option>
+                    <option value="купе">купе</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="drive">Привод</label>
+                <select required class="form-control" id="drive">
+                    <option value="полный подключаемый">полный подключаемый</option>
+                    <option value="передний">передний</option>
+                    <option value="задний">задний</option>
+                    <option value="постоянный полный">постоянный полный</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="transmission">КПП</label>
+                <select required class="form-control" id="transmission">
+                    <option value="автомат">автомат</option>
+                    <option value="механика">механика</option>
+                    <option value="вариатор">вариатор</option>
+                    <option value="типтроник">типтроник</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Предсказание</button>
+        </form>
+    </div>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
