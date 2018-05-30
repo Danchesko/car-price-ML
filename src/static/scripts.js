@@ -4,19 +4,22 @@ function makePrediction(body) {
         headers: {
           "Content-type": "application/json"
         },
-        body
+        body: JSON.stringify(body)
     }
-    return fetch('localhost:5000/api/prediction', options)
+    return fetch('http://localhost:5000/api/prediction', options)
 }
 
 function onSubmitClick(e) {
     e.preventDefault()
-    makePrediction(getInputValues())    
+    makePrediction(getInputValues())
+    .then(response => response.text())
+    .then(text => parseFloat(text))
+    .then(float => float.toFixed(2))
+    .then(text => document.getElementById('answer').innerHTML = `Рекомендуемая цена: $${text}`)
 }
 
 const inputNameToValue = select => ({ [select.id]: select.value })
 const toOneObject = (total, obj) => (Object.assign(total, obj))
 const getInputValues = () => Array.from(document.querySelectorAll('select,input[type=text],input[type=number]')).map(inputNameToValue).reduce(toOneObject, {})
-
 
 

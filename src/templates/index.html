@@ -115,7 +115,7 @@
 
             <div class="form-group">
                 <label for="fuel">Тип топлива</label>
-                <select required class="form-control" id="fuel-type">
+                <select required class="form-control" id="fuel">
                     <option value="другое" selected>другое</option>
                     <option value="дизель">дизель</option>
                     <option value="бензин">бензин</option>
@@ -189,9 +189,18 @@
                     <option value="типтроник">типтроник</option>
                 </select>
             </div>
+            
+            <div class="form-group">
+                <label for="urgency">Срочно</label>
+                <select required class="form-control" id="urgency">
+                    <option value="срочно">срочно</option>
+                    <option value="другое">...</option>
+                </select>
+            </div>
 
             <button type="submit" class="btn btn-primary">Предсказание</button>
         </form>
+        <h2 id='answer'/>
     </div>
     <script src="js/scripts.js"></script>
 </body>

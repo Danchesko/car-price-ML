@@ -9,13 +9,13 @@ def predict(test,estimator = load_or_save_model.get_trained_forest_estimator()):
     return prediction.tolist()
 
 def get_test_data(arguments,columns):
-    year = arguments['year']
+    year = int(arguments['year'])
     trmn= arguments['transmission']
     brand = arguments['brand']
     urgency = arguments['urgency']
-    capacity = arguments['capacity']
+    capacity = float(arguments['capacity'])
     drive = arguments['drive']
-    mileage = arguments['mileage']
+    mileage = float(arguments['mileage'])
     wheel = arguments['wheel']
     carcass = arguments['carcass']
     fuel = arguments['fuel']

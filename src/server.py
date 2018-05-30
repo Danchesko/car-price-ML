@@ -7,6 +7,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/js/<path:path>')
+def serve_js(path):
+    return send_from_directory('static',path)
   
 @app.route('/api/prediction',methods = ['POST'])
 def prediction():
