@@ -7,7 +7,7 @@ def predict(test,estimator = load_or_save_model.get_trained_forest_estimator()):
     X,test = get_X_and_y.make_dummies(X,test)
     prediction = estimator.predict(test)
     return prediction.tolist()
-    
+
 def get_test_data(arguments,columns):
     year = arguments['year']
     trmn= arguments['transmission']
@@ -24,5 +24,3 @@ def get_test_data(arguments,columns):
                                       drive,mileage,wheel,urgency,carcass,fuel,
                                       color]], columns = columns)
     return test_data
-
-#lib = {'year':2014,'transmission':'типтроник','brand':'toyota','urgency':'другое','capacity':4.4,'drive':'постоянный полный','mileage':130000,'wheel':'левый','carcass':"седан", 'fuel':'бензин', 'color':'белый'}

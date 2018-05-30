@@ -13,13 +13,13 @@ def get_trained_forest_estimator(path = paths.TRAINED_FOREST_ESTIMATOR):
 
 def save_best_forest_parameter(params,path = paths.BEST_FOREST_PARAMETER):
     return (pickle_drop(params,path))
-#
-#def save_trained_forest_estimator(params,path = paths.TRAINED_FOREST_ESTIMATOR):
-#    return (pickle_drop(params,path))
 
-def save_data_columns(params,path = paths.DATA_COLUMNS):
+def save_trained_forest_estimator(params,path = paths.TRAINED_FOREST_ESTIMATOR):
     return (pickle_drop(params,path))
-    
+#
+#def save_data_columns(params,path = paths.DATA_COLUMNS):
+#    return (pickle_drop(params,path))
+#    
 def pickle_drop(pkle,path):
     if not os.path.exists(path):
         with open(path,'wb') as sfile:
