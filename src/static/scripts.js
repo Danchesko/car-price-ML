@@ -6,7 +6,7 @@ function makePrediction(body) {
         },
         body: JSON.stringify(body)
     }
-    return fetch('http://localhost:5000/api/prediction', options)
+    return fetch(`${window.location.origin}/api/prediction`, options)
 }
 
 function onSubmitClick(e) {
