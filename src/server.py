@@ -1,6 +1,6 @@
 import json
 from flask import Flask, request,render_template
-import index 
+from index import get_prediction
 
 app = Flask(__name__)
 
@@ -12,7 +12,7 @@ def index():
 def prediction():
     if request.method == 'POST':
         data_for_prediction = json.loads(request.data)
-        return index.get_prediction(data_for_prediction)
+        return str(get_prediction(data_for_prediction))
     
 if __name__ == '__main__':
     app.run(debug=True)
