@@ -11,5 +11,4 @@ CLEANED_OUTLIERS_DATASET_PATH = os.path.join(DATA_PATH,os.path.normpath("interim
 PROCESSED_DATASET_PATH =  os.path.join(DATA_PATH,os.path.normpath("processed/cars_max_unbiased.xlsx"))
 
 BEST_FOREST_PARAMETER = os.path.join(MODEL_PATH, os.path.normpath("best_forest_parameter.cav"))
-TRAINED_FOREST_ESTIMATOR =  os.path.join(MODEL_PATH, os.path.normpath("trained_forest_estimator.cav"))
-#DATA_COLUMNS  = os.path.join(MODEL_PATH, os.path.normpath("data_columns.cav"))
+TRAINED_FOREST_ESTIMATOR =  os.path.join(MODEL_PATH, os.path.normpath("trained_forest_estimator_x64.cav"))
