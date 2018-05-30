@@ -19,4 +19,4 @@ def prediction():
         return str(get_prediction(data_for_prediction))
     
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host = "0.0.0.0")
