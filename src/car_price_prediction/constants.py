@@ -1,4 +1,5 @@
 class Car():
+    
     MAX_PRICE = 300000
     MIN_PRICE = 500
     MAX_POWER = 600
