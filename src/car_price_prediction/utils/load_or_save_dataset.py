@@ -33,7 +33,7 @@ def save_processed_dataset(dataset, path=paths.PROCESSED_DATASET_PATH):
 def save_dataset(dataset, path):
     writer = pd.ExcelWriter(path)
     dataset.to_excel(writer, "Sheet1", encoding=ENCODING_XLSX, index=False)
-        
+
 
 def read_excel(path):
     if os.path.exists(path):

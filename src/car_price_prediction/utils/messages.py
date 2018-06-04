@@ -3,7 +3,7 @@ SCRAPING_STARTED_MESSAGE = (
     " is being initialized with default/setted parameters")
 
 SCRAPING_DATA_FOUND_MESSAGE = ("Scraped data was found, parameters " +
-                       "will be created based on found data")
+                               "will be created based on found data")
 
 LOADING_RAW_DATA_MESSAGE = "Loading raw/scraped data..."
 
