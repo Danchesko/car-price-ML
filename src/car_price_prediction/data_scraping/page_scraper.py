@@ -12,11 +12,10 @@ PARAM_PRICE, PARAM_BRAND, PARAM_URGENCY = Car.PRICE, Car.BRAND, Car.URGENCY
 failed_pages = []
 
 
-def make_data_frame(start=840000, stop=873000):
-    """Start, stop arguments are arguments for building an html path
-    for scraping. There are default, although can be adjusted,but
-    webpage content knowledge(cars.kg) is needed to change start, stop arguments.
-    Function also returns failed pages addresses, so if needed you can scrape them again"""
+def make_data_frame(start, stop):
+    """Start, stop arguments are arguments for building an html
+    path for scraping. Function returns scraped data failed and
+    pages addresses, so if needed you can scrape them again"""
     list_of_dicts = make_list_of_dicts(start, stop)
     df = pd.DataFrame(list_of_dicts)
     return df, failed_pages
