@@ -4,12 +4,12 @@ from sklearn.utils import shuffle
 from sklearn.preprocessing import StandardScaler
 
 
-def get_train_test(data, test_size=0.2):
-    data = shuffle(data)
+def get_train_test(data, test_size, should_shuffle):
+    if should_shuffle:
+        data = shuffle(data)
     X, y = get_data_and_target(data)
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size)
-    X_train, X_test = make_dummies(X_train, X_test)
     return X_train, X_test, y_train, y_test
 
 
@@ -23,18 +23,12 @@ def make_dummies(X_train, X_test):
     return X_train, X_test
 
 
-def get_train_test_std(data, test_size=0.2):
-    X_train, X_test, y_train, y_test = get_train_test(data, test_size)
-    X_train, X_test = make_dummies_std(X_train, X_test)
-    return X_train, X_test, y_train, y_test
-
-
-def make_dummies_std(X_train, X_test):
+def scale_data(X_train, X_test):
+    X_train,X_test=X_train.copy(),X_test.copy()
     ss = StandardScaler()
-    cols = X_train.select_dtypes(include=['int', 'float']).columns
+    cols = X_train.select_dtypes(include=['number']).columns
     X_train[cols] = ss.fit_transform(X_train[cols])
     X_test[cols] = ss.transform(X_test[cols])
-    X_train, X_test = make_dummies(X_train, X_test)
     return X_train, X_test
 
 

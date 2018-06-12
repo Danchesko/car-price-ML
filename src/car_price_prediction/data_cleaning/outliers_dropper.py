@@ -2,7 +2,8 @@ import numpy as np
 from car_price_prediction.constants import Car
 
 
-def drop_outliers(df):
+def drop_outliers(data):
+    df = data.copy()
     df = make_empties_nan(df)
     df = drop_data(df)
     df = replace_outliers(df)

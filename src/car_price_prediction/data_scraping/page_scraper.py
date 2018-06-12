@@ -13,8 +13,8 @@ failed_pages = []
 
 
 def make_data_frame(start, stop):
-    """Start, stop arguments are arguments for building an html
-    path for scraping. Function returns scraped data failed and
+    """Start, stop arguments are arguments for building an url
+    path for scraping. Function returns scraped data and failed
     pages addresses, so if needed you can scrape them again"""
     list_of_dicts = make_list_of_dicts(start, stop)
     df = pd.DataFrame(list_of_dicts)
