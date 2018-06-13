@@ -16,6 +16,7 @@ function onSubmitClick(e) {
     .then(text => parseFloat(text))
     .then(float => float.toFixed(2))
     .then(text => document.getElementById('answer').innerHTML = `Рекомендуемая цена: $${text}`)
+    .then(() => window.scrollTo(0,document.body.scrollHeight));
 }
 
 const inputNameToValue = select => ({ [select.id]: select.value })
