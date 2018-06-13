@@ -24,5 +24,4 @@ class Car():
     WHEEL = "Руль"
     FUEL = "Топливо"
     BRAND = "Марка"
-    URGENCY = "Спешность"
     COLOR = "Цвет"

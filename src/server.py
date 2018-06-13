@@ -14,12 +14,14 @@ def index():
 def serve_js(path):
     return send_from_directory('static', path)
 
+tester = None
 
 @app.route('/api/prediction', methods=['POST'])
 def prediction():
     if request.method == 'POST':
         data_for_prediction = json.loads(request.data)
-        return str(get_prediction(data_for_prediction))
+        response = str(get_prediction(data_for_prediction))
+        return response
 
 
 if __name__ == '__main__':

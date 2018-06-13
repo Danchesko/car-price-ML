@@ -7,7 +7,8 @@ from sklearn.neighbors import KNeighborsClassifier
 
 VALUE_FOR_IMPUTE = "другое"
 
-def impute_dataset(data):
+def get_imputed_dataset(data):
+    data = data.copy()
     data = drop_features(data)
     data= impute_features(data)
     return data

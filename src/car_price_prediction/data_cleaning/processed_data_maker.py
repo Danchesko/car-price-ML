@@ -1,30 +1,36 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from car_price_prediction.constants import Car
+from sklearn.utils import shuffle
 
-columns_to_drop = [
+DROP_COLUMNS = [
     Car.YEAR,
     Car.TRANSMISSION,
     Car.CAPACITY,
     Car.DRIVE,
     Car.WHEEL,
     Car.CARCASS]
-column_to_drop, column_to_impute,column_to_change_type = Car.POWER, Car.MILEAGE,Car.YEAR
-value_for_impute = "другое"
+IMPUTE_VALUE = "другое"
 
 
-def make_processed_data(data):
+def get_processed_data(data, should_shuffle=True, random_seed = 0):
     df = data.copy()
     df = drop_features(df)
     df = impute_features(df)
     df = change_year_type(df)
+    if should_shuffle:
+        df = shuffle_data(df)
+    return df
+
+def shuffle_data(df,random_seed):
+    df = shuffle(df,random_state=random_seed)
     return df
 
 
 def drop_features(df):
-    df = df.drop(columns=[column_to_drop])
+    df = df.drop(columns=[Car.POWER])
     df = df.dropna(thresh=6)
-    df = df.dropna(subset=columns_to_drop)
+    df = df.dropna(subset=DROP_COLUMNS)
     df = df.drop_duplicates()
     return df
 
@@ -32,28 +38,22 @@ def drop_features(df):
 def impute_features(df):
     df = impute_color(df)
     df = impute_fuel(df)
-    df = impute_urgency(df)
     df = knn_impute_mileage(df)
     return df
 
 def change_year_type(df):
-    df[column_to_change_type] = df[column_to_change_type].astype(int)
+    df[Car.YEAR] = df[Car.YEAR].astype(int)
     return df
     
     
     
 def impute_color(df):
-    df[[Car.COLOR]] = df[[Car.COLOR]].fillna(value=value_for_impute)
+    df[[Car.COLOR]] = df[[Car.COLOR]].fillna(value=IMPUTE_VALUE)
     return df
 
 
 def impute_fuel(df):
-    df[[Car.FUEL]] = df[[Car.FUEL]].fillna(value=value_for_impute)
-    return df
-
-
-def impute_urgency(df):
-    df[[Car.URGENCY]] = df[[Car.URGENCY]].fillna(value=value_for_impute)
+    df[[Car.FUEL]] = df[[Car.FUEL]].fillna(value=IMPUTE_VALUE)
     return df
 
 
@@ -61,11 +61,11 @@ def knn_impute_mileage(df):
     df = check_nans(df)
     cols = get_cols(df)
     X_train, X_test, y_train, y_test = get_train_test(
-        df, cols, column_to_impute)
+        df, cols, Car.MILEAGE)
     y_pred = get_y_pred(X_train, X_test, y_train, y_test)
     y_pred = pd.Series(y_pred, index=y_test.index, name=y_test.name)
-    df.loc[df[~df[column_to_impute].notnull()].index,
-             column_to_impute] = y_pred
+    df.loc[df[~df[Car.MILEAGE].notnull()].index,
+             Car.MILEAGE] = y_pred
     return df
 
 
@@ -79,9 +79,9 @@ def get_cols(df):
     return cols
 
 
-def get_train_test(df, data_columns, target):
-    X_train, y_train = get_train(df, data_columns, target)
-    X_test, y_test = get_test(df, data_columns, target)
+def get_train_test(df, df_columns, target):
+    X_train, y_train = get_train(df, df_columns, target)
+    X_test, y_test = get_test(df, df_columns, target)
     missing_cols = set(X_train.columns) - set(X_test.columns)
     for c in missing_cols:
         X_test[c] = 0

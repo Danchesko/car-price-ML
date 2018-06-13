@@ -16,6 +16,6 @@ PROCESSED_DATASET_PATH = os.path.join(
     DATA_PATH, os.path.normpath("processed/cars_max_unbiased.xlsx"))
 
 BEST_FOREST_PARAMETER = os.path.join(
-    MODEL_PATH, os.path.normpath("best_forest_parameter.cav"))
+    MODEL_PATH, os.path.normpath("best_forest_parameter(2).cav"))
 TRAINED_FOREST_ESTIMATOR = os.path.join(
-    MODEL_PATH, os.path.normpath("trained_forest_estimator_x86.cav"))
+    MODEL_PATH, os.path.normpath("trained_forest_estimator_x86(2).cav"))

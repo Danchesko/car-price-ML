@@ -14,6 +14,6 @@ def get_test_data(arguments, columns):
     fuel = arguments['fuel']
     color = arguments['color']
     test_data = pd.DataFrame(data=[[year, trmn, brand, capacity,
-                                    drive, mileage, wheel, urgency, carcass, fuel,
-                                    color]], columns=columns)
+                                    drive, mileage, wheel, urgency, 
+                                    carcass, fuel, color]], columns=columns)
     return test_data

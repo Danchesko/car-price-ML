@@ -2,7 +2,7 @@ import numpy as np
 from car_price_prediction.constants import Car
 
 
-def drop_outliers(data):
+def get_dropped_data(data):
     df = data.copy()
     df = make_empties_nan(df)
     df = drop_data(df)
@@ -28,6 +28,12 @@ def replace_outliers(df):
     return df
 
 
+def drop_price_outliers(df):
+    df = df[df[Car.PRICE] < Car.MAX_PRICE]
+    df = df[df[Car.PRICE] > Car.MIN_PRICE]
+    return df
+
+
 def drop_max_price_min_year(df):
     '''Some advertisments in website I scraped contained impossibly high price in dollars,
     it was supposed to be in other currency, this function deals with this problem'''
@@ -39,12 +45,6 @@ def drop_max_price_min_year(df):
     cars_to_drop = cars_till_2014[cars_till_2014[Car.PRICE]
                                   > Car.MAX_MONEY_FOR_MIN_YEAR_2014]
     df = df.drop(cars_to_drop.index)
-    return df
-
-
-def drop_price_outliers(df):
-    df = df[df[Car.PRICE] < Car.MAX_PRICE]
-    df = df[df[Car.PRICE] > Car.MIN_PRICE]
     return df
 
 

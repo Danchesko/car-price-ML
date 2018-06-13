@@ -5,7 +5,7 @@ sys.path.append(
         (os.path.join(
             os.path.abspath(__file__),
             os.pardir))))
-from car_price_prediction.model.random_forest_predict import predict
+from car_price_prediction.model.model_predictor import predict
 
 
 def get_prediction(pred_request):

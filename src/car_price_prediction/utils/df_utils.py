@@ -1,12 +1,9 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.utils import shuffle
 from sklearn.preprocessing import StandardScaler
 
 
-def get_train_test(data, test_size, should_shuffle):
-    if should_shuffle:
-        data = shuffle(data)
+def get_train_test(data, test_size):
     X, y = get_data_and_target(data)
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size)
@@ -23,7 +20,7 @@ def make_dummies(X_train, X_test):
     return X_train, X_test
 
 
-def scale_data(X_train, X_test):
+def scale_train_test(X_train, X_test):
     X_train,X_test=X_train.copy(),X_test.copy()
     ss = StandardScaler()
     cols = X_train.select_dtypes(include=['number']).columns
@@ -31,6 +28,14 @@ def scale_data(X_train, X_test):
     X_test[cols] = ss.transform(X_test[cols])
     return X_train, X_test
 
+
+def scale_train(X):
+    X = X.copy()
+    ss = StandardScaler()
+    cols = X.select_dtypes(include=['number']).columns
+    X[cols] = ss.fit_transform(X[cols])
+    return X
+    
 
 def get_data_and_target(data):
     X = data.iloc[:, :-1]
