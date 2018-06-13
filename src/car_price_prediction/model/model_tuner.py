@@ -18,4 +18,4 @@ def get_grid_best_params(data):
         scoring=scoring,
         cv=folds)
     grid.fit(X_train, y_train)
-    return grid
+    return grid.best_params_

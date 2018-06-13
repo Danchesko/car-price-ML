@@ -5,9 +5,9 @@ pd.options.mode.chained_assignment = None
 import sys
 sys.path.append("src/")
 from car_price_prediction.data_scraping import page_scraper
-from car_price_prediction.utils import load_or_save_dataset, messages, load_or_save_model
-from car_price_prediction.data_cleaning import dropping_outliers, making_processed_data
-from car_price_prediction.model import random_forest_tuning, random_forest_training
+from car_price_prediction.utils import dataset_manager, messages, model_manager
+from car_price_prediction.data_cleaning import outliers_dropper, processed_data_maker
+from car_price_prediction.model import model_tuner, model_trainer
 
 
 def main():
@@ -34,7 +34,7 @@ def manage_data():
 
 
 def load_raw_dataset():
-    data = load_or_save_dataset.get_raw_dataset()
+    data = dataset_manager.get_raw_dataset()
     if data is None:
         print(messages.SCRAPING_STARTED_MESSAGE)
         data, failed_pages = page_scraper.make_data_frame()
@@ -45,27 +45,27 @@ def load_raw_dataset():
 
 
 def drop_raw_dataset(data):
-    data = dropping_outliers.drop_data(data)
+    data = outliers_dropper.get_dropped_data(data)
     return data
 
 
 def make_ready_dataset(data):
-    data = making_processed_data.make_processed_data(data)
+    data = processed_data_maker.get_processed_data(data)
     return data
 
 
 def save_datasets(raw_data, dropped_data, ready_data):
-    load_or_save_dataset.save_raw_dataset(raw_data)
-    load_or_save_dataset.save_cleaned_outliers_dataset(dropped_data)
-    load_or_save_dataset.save_processed_dataset(ready_data)
+    dataset_manager.save_raw_dataset(raw_data)
+    dataset_manager.save_cleaned_outliers_dataset(dropped_data)
+    dataset_manager.save_processed_dataset(ready_data)
 
 
 def manage_models(data):
-    best_params = random_forest_tuning.get_grid_best_params(data)
-    load_or_save_model.save_best_forest_parameter(best_params)
-    estimator = random_forest_training.train_model(data, best_params)
-    load_or_save_model.save_trained_forest_estimator(estimator)
+    best_params = model_tuner.get_grid_best_params(data)
+    model_manager.save_best_forest_parameter(best_params)
+    estimator = model_trainer.train_model(data, best_params)
+    model_manager.save_trained_forest_estimator(estimator)
 
 # Uncomment, if you are going to use
-# if __name__ == "__main__":
+#if __name__ == "__main__":
 #    main()

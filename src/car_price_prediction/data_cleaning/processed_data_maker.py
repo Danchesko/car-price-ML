@@ -19,7 +19,7 @@ def get_processed_data(data, should_shuffle=True, random_seed = 0):
     df = impute_features(df)
     df = change_year_type(df)
     if should_shuffle:
-        df = shuffle_data(df)
+        df = shuffle_data(df,random_seed)
     return df
 
 def shuffle_data(df,random_seed):

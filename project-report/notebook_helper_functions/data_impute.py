@@ -34,7 +34,6 @@ def drop_year(data):
 def impute_features(data):
     data = impute_color(data)
     data = impute_fuel(data)
-    data = impute_urgency(data)
     data = knn_impute_all(data)
     return data
 
@@ -47,9 +46,6 @@ def impute_fuel(data):
     data[[Car.FUEL]] = data[[Car.FUEL]].fillna(value=VALUE_FOR_IMPUTE)
     return data
 
-def impute_urgency(data):
-    data[[Car.URGENCY]] = data[[Car.URGENCY]].fillna(value=VALUE_FOR_IMPUTE)
-    return data
 
 def knn_impute_all(data):
     missing_columns =  data.columns[data.isnull().any()].tolist()
