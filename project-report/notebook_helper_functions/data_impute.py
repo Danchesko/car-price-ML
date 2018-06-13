@@ -7,35 +7,42 @@ from sklearn.neighbors import KNeighborsClassifier
 
 VALUE_FOR_IMPUTE = "другое"
 
+
 def get_imputed_dataset(data):
     data = data.copy()
     data = drop_features(data)
-    data= impute_features(data)
+    data = impute_features(data)
     return data
-    
+
+
 def drop_features(data):
     data = drop_missing_y(data)
     data = drop_carcase(data)
     data = drop_year(data)
     return data
 
+
 def drop_missing_y(data):
-    data.dropna(subset = [Car.PRICE])
+    data.dropna(subset=[Car.PRICE])
     return data
+
 
 def drop_carcase(data):
-    data.dropna(subset = [Car.CARCASS])
+    data.dropna(subset=[Car.CARCASS])
     return data
 
+
 def drop_year(data):
-    data.dropna(subset = [Car.YEAR])
+    data.dropna(subset=[Car.YEAR])
     return data
-    
+
+
 def impute_features(data):
     data = impute_color(data)
     data = impute_fuel(data)
     data = knn_impute_all(data)
     return data
+
 
 def impute_color(data):
     data[[Car.COLOR]] = data[[Car.COLOR]].fillna(value=VALUE_FOR_IMPUTE)
@@ -48,20 +55,22 @@ def impute_fuel(data):
 
 
 def knn_impute_all(data):
-    missing_columns =  data.columns[data.isnull().any()].tolist()
+    missing_columns = data.columns[data.isnull().any()].tolist()
     for column in missing_columns:
         not_missing_cols = data.columns[~data.isnull().any()].tolist()
-        X_train,X_test,y_train,y_test = get_train_test(data,not_missing_cols,column)
+        X_train, X_test, y_train, y_test = get_train_test(
+            data, not_missing_cols, column)
         le = LabelEncoder()
-        if y_train.dtype==np.object: 
-            y_train=le.fit_transform(y_train)
-            y_pred = get_y_pred(X_train,X_test,y_train,y_test)
+        if y_train.dtype == np.object:
+            y_train = le.fit_transform(y_train)
+            y_pred = get_y_pred(X_train, X_test, y_train, y_test)
             y_pred = le.inverse_transform(y_pred)
         else:
-            y_pred = get_y_pred(X_train,X_test,y_train,y_test)
-        y_pred = pd.Series(y_pred,index=y_test.index,name = y_test.name)
-        data.loc[data[~data[column].notnull()].index,column] = y_pred
+            y_pred = get_y_pred(X_train, X_test, y_train, y_test)
+        y_pred = pd.Series(y_pred, index=y_test.index, name=y_test.name)
+        data.loc[data[~data[column].notnull()].index, column] = y_pred
     return data
+
 
 def get_train_test(data, data_columns, target):
     X_train, y_train = get_train(data, data_columns, target)
@@ -71,7 +80,6 @@ def get_train_test(data, data_columns, target):
         X_test[c] = 0
     X_test = X_test[X_train.columns]
     return X_train, X_test, y_train, y_test
-
 
 
 def get_train(data, data_columns, target):
@@ -88,12 +96,11 @@ def get_test(data, data_columns, target):
     return X_test, y_test
 
 
-def get_y_pred(X_train,X_test,y_train,y_test):
-    if y_train.dtype!=np.int32:
+def get_y_pred(X_train, X_test, y_train, y_test):
+    if y_train.dtype != np.int32:
         knn = RandomForestRegressor(n_estimators=10)
     else:
         knn = KNeighborsClassifier(n_neighbors=5)
-    knn.fit(X_train,y_train)
+    knn.fit(X_train, y_train)
     y_pred = knn.predict(X_test)
     return y_pred
-

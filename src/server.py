@@ -14,7 +14,9 @@ def index():
 def serve_js(path):
     return send_from_directory('static', path)
 
+
 tester = None
+
 
 @app.route('/api/prediction', methods=['POST'])
 def prediction():

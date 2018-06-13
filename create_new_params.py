@@ -67,5 +67,5 @@ def manage_models(data):
     model_manager.save_trained_forest_estimator(estimator)
 
 # Uncomment, if you are going to use
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #    main()

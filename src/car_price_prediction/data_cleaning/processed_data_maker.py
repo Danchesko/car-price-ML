@@ -13,17 +13,18 @@ DROP_COLUMNS = [
 IMPUTE_VALUE = "другое"
 
 
-def get_processed_data(data, should_shuffle=True, random_seed = 0):
+def get_processed_data(data, should_shuffle=True, random_seed=0):
     df = data.copy()
     df = drop_features(df)
     df = impute_features(df)
     df = change_year_type(df)
     if should_shuffle:
-        df = shuffle_data(df,random_seed)
+        df = shuffle_data(df, random_seed)
     return df
 
-def shuffle_data(df,random_seed):
-    df = shuffle(df,random_state=random_seed)
+
+def shuffle_data(df, random_seed):
+    df = shuffle(df, random_state=random_seed)
     return df
 
 
@@ -41,12 +42,12 @@ def impute_features(df):
     df = knn_impute_mileage(df)
     return df
 
+
 def change_year_type(df):
     df[Car.YEAR] = df[Car.YEAR].astype(int)
     return df
-    
-    
-    
+
+
 def impute_color(df):
     df[[Car.COLOR]] = df[[Car.COLOR]].fillna(value=IMPUTE_VALUE)
     return df
@@ -65,7 +66,7 @@ def knn_impute_mileage(df):
     y_pred = get_y_pred(X_train, X_test, y_train, y_test)
     y_pred = pd.Series(y_pred, index=y_test.index, name=y_test.name)
     df.loc[df[~df[Car.MILEAGE].notnull()].index,
-             Car.MILEAGE] = y_pred
+           Car.MILEAGE] = y_pred
     return df
 
 

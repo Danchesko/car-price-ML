@@ -21,7 +21,7 @@ def make_dummies(X_train, X_test):
 
 
 def scale_train_test(X_train, X_test):
-    X_train,X_test=X_train.copy(),X_test.copy()
+    X_train, X_test = X_train.copy(), X_test.copy()
     ss = StandardScaler()
     cols = X_train.select_dtypes(include=['number']).columns
     X_train[cols] = ss.fit_transform(X_train[cols])
@@ -35,7 +35,7 @@ def scale_train(X):
     cols = X.select_dtypes(include=['number']).columns
     X[cols] = ss.fit_transform(X[cols])
     return X
-    
+
 
 def get_data_and_target(data):
     X = data.iloc[:, :-1]

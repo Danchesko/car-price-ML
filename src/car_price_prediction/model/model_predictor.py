@@ -1,4 +1,5 @@
-from car_price_prediction.utils import dataset_manager,model_manager,df_utils,json_manager
+from car_price_prediction.utils import dataset_manager, model_manager, df_utils, json_manager
+
 
 def predict(test, estimator=model_manager.get_trained_forest_estimator()):
     X, y = df_utils.get_data_and_target(
