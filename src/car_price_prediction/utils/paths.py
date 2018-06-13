@@ -18,4 +18,4 @@ PROCESSED_DATASET_PATH = os.path.join(
 BEST_FOREST_PARAMETER = os.path.join(
     MODEL_PATH, os.path.normpath("best_forest_parameter.cav"))
 TRAINED_FOREST_ESTIMATOR = os.path.join(
-    MODEL_PATH, os.path.normpath("trained_forest_estimator_x86.cav"))
+    MODEL_PATH, os.path.normpath("trained_forest_estimator_x64.cav"))
