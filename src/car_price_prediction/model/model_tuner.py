@@ -17,11 +17,11 @@ def get_grid_best_params(data, check_model=False):
         cv=configs.folds)
     grid.fit(X_train, y_train)
     if check_model is True:
-        check_model(grid, X_train, X_test, y_train, y_test)
+        check_train_test(grid, X_train, X_test, y_train, y_test)
     return grid.best_params_
 
 
-def check_model(grid, X_train, X_test, y_train, y_test):
+def check_train_test(grid, X_train, X_test, y_train, y_test):
     y_pred_test = grid.predict(X_test)
     y_pred_train = grid.predict(X_train)
     print(
