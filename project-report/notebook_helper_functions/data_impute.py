@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-from car_price_prediction.constants import Car
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsClassifier
+from src.car_price_prediction.constants import Car
+
 
 VALUE_FOR_IMPUTE = "другое"
 
