@@ -1,13 +1,10 @@
 import pandas as pd
 # disallow pandas to throw warnings
 pd.options.mode.chained_assignment = None
-# allows import to be from the ROOT of project
-import sys
-sys.path.append("src/")
-from car_price_prediction.data_scraping import page_scraper
-from car_price_prediction.utils import dataset_manager, messages, model_manager
-from car_price_prediction.data_cleaning import outliers_dropper, processed_data_maker
-from car_price_prediction.model import model_tuner, model_trainer
+from src.car_price_prediction.data_scraping import page_scraper
+from src.car_price_prediction.utils import dataset_manager, messages, model_manager
+from src.car_price_prediction.data_cleaning import outliers_dropper, processed_data_maker
+from src.car_price_prediction.model import model_tuner, model_trainer
 
 
 def main():
@@ -67,5 +64,5 @@ def manage_models(data):
     model_manager.save_trained_forest_estimator(estimator)
 
 # Uncomment, if you are going to use
-# if __name__ == "__main__":
+#if __name__ == "__main__":
 #    main()
