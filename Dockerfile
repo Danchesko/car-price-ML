@@ -6,4 +6,6 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
+ENV PYTHONPATH ="$PWD"
+
 EXPOSE 5000
