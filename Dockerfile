@@ -6,6 +6,6 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-ENV PYTHONPATH =${PWD}
+ENV PYTHONPATH="/home/app"
 
 EXPOSE 5000
