@@ -1,4 +1,4 @@
-from car_price_prediction.utils import df_utils
+from src.car_price_prediction.utils import df_utils
 from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 

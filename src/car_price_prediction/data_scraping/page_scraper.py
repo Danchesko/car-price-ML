@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 import pandas as pd
 import re
-from car_price_prediction.constants import Car
+from src.car_price_prediction.constants import Car
 
 PAGE_URL = "https://cars.kg/offers/%d.html"
 PARAMS_TO_CLEAN = [Car.YEAR, Car.MILEAGE, Car.CAPACITY, Car.POWER, Car.PRICE]
@@ -21,12 +21,8 @@ def get_scraped_dataset(start, stop):
 
 
 def get_cars_data(start, stop):
-    cars_data = []
-    for page in tqdm(range(start, stop, 1)):
-        data = get_car_data(page)
-        if data is not None:
-            cars_data.append(data)
-    return cars_data
+    return (get_car_data(page) for page in tqdm(range(start, stop))
+            if get_car_data(page) is not None)
 
 
 def get_car_data(address):

@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from car_price_prediction.constants import Car
 from sklearn.utils import shuffle
+from src.car_price_prediction.constants import Car
 
 DROP_COLUMNS = [
     Car.YEAR,

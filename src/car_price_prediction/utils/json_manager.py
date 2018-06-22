@@ -1,18 +1,18 @@
 import pandas as pd
+from argparse import Namespace
 
 
 def get_test_data(arguments, columns):
-    year = int(arguments['year'])
-    trmn = arguments['transmission']
-    brand = arguments['brand']
-    capacity = float(arguments['capacity'])
-    drive = arguments['drive']
-    mileage = float(arguments['mileage'])
-    wheel = arguments['wheel']
-    carcass = arguments['carcass']
-    fuel = arguments['fuel']
-    color = arguments['color']
-    test_data = pd.DataFrame(data=[[year, trmn, brand, capacity,
-                                    drive, mileage, wheel, carcass,
-                                    fuel, color]], columns=columns)
+    car_params = Namespace(**arguments)
+    test_data = pd.DataFrame(data=[[int(car_params.year),
+                                    car_params.transmission,
+                                    car_params.brand,
+                                    float(car_params.capacity),
+                                    car_params.drive,
+                                    float(car_params.mileage),
+                                    car_params.wheel,
+                                    car_params.carcass,
+                                    car_params.fuel,
+                                    car_params.color]],
+                             columns=columns)
     return test_data

@@ -1,5 +1,5 @@
 import numpy as np
-from car_price_prediction.constants import Car
+from src.car_price_prediction.constants import Car
 
 
 def get_dropped_data(data):

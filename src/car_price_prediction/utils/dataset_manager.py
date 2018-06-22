@@ -1,42 +1,50 @@
 import pandas as pd
-import os
-from car_price_prediction.utils import paths
+import sys
+from src.car_price_prediction.utils import paths
 
 ENCODING_XLSX = "utf-8-sig"
 
 
-def get_raw_dataset(path=paths.RAW_DATASET_PATH):
-    return read_excel(path)
+def get_raw_dataset():
+    return read_excel(paths.RAW_DATASET_PATH)
 
 
-def get_cleaned_outliers_dataset(path=paths.CLEANED_OUTLIERS_DATASET_PATH):
-    return read_excel(path)
+def get_cleaned_outliers_dataset():
+    return read_excel(paths.CLEANED_OUTLIERS_DATASET_PATH)
 
 
-def get_processed_dataset(path=paths.PROCESSED_DATASET_PATH):
-    return read_excel(path)
+def get_processed_dataset():
+    return read_excel(paths.PROCESSED_DATASET_PATH)
 
 
-def save_raw_dataset(dataset, path=paths.RAW_DATASET_PATH):
-    return (save_dataset(dataset, path))
+def save_raw_dataset(dataset):
+    return (save_dataset(dataset, paths.RAW_DATASET_PATH))
 
 
-def save_cleaned_outliers_dataset(
-        dataset, path=paths.CLEANED_OUTLIERS_DATASET_PATH):
-    return (save_dataset(dataset, path))
+def save_cleaned_outliers_dataset(dataset):
+    return (save_dataset(dataset, paths.CLEANED_OUTLIERS_DATASET_PATH))
 
 
-def save_processed_dataset(dataset, path=paths.PROCESSED_DATASET_PATH):
-    return(save_dataset(dataset, path))
+def save_processed_dataset(dataset):
+    return (save_dataset(dataset, paths.PROCESSED_DATASET_PATH))
 
 
 def save_dataset(dataset, path):
-    writer = pd.ExcelWriter(path)
-    dataset.to_excel(writer, "Sheet1", encoding=ENCODING_XLSX, index=False)
+    try:
+        writer = pd.ExcelWriter(path)
+        dataset.to_excel(writer, "Sheet1", encoding=ENCODING_XLSX, index=False)
+    except Exception as e:
+        print("Unknown error when saving a file to {}".format(path))
+        print(e)
+        sys.exit(1)
 
 
 def read_excel(path):
-    if os.path.exists(path):
+    try:
         return pd.read_excel(path)
-    else:
-        return None
+    except FileNotFoundError:
+        print("Couldn't find a file in path {}".format(path))
+        sys.exit(1)
+    except Exception as e:
+        print("Unkown error: {}".format(e))
+        sys.exit(1)

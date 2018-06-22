@@ -1,6 +1,6 @@
 import json
 from flask import Flask, request, render_template, send_from_directory
-from index import get_prediction
+from src.index import get_prediction
 
 app = Flask(__name__)
 
