@@ -1,5 +1,4 @@
 import pandas as pd
-import sys
 from src.car_price_prediction.utils import paths
 
 ENCODING_XLSX = "utf-8-sig"
@@ -30,21 +29,9 @@ def save_processed_dataset(dataset):
 
 
 def save_dataset(dataset, path):
-    try:
-        writer = pd.ExcelWriter(path)
-        dataset.to_excel(writer, "Sheet1", encoding=ENCODING_XLSX, index=False)
-    except Exception as e:
-        print("Unknown error when saving a file to {}".format(path))
-        print(e)
-        sys.exit(1)
+    writer = pd.ExcelWriter(path)
+    dataset.to_excel(writer, "Sheet1", encoding=ENCODING_XLSX, index=False)
 
 
 def read_excel(path):
-    try:
-        return pd.read_excel(path)
-    except FileNotFoundError:
-        print("Couldn't find a file in path {}".format(path))
-        sys.exit(1)
-    except Exception as e:
-        print("Unkown error: {}".format(e))
-        sys.exit(1)
+    return pd.read_excel(path)
