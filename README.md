@@ -20,10 +20,9 @@ pip install -r requirements.txt
 
 ## Authors
 
-###Daniiar Berdikulov
+### Daniiar Berdikulov
 
 ## Acknowledgments
 
-* [Esen Dzhailobaev] (https://github.com/s7b5en) - thanks for front-end advices
-* [Andrei Khegai] (https://github.com/akhegai) - thanks for helping me with docker
-
+* [Esen Dzhailobaev](https://github.com/s7b5en) - thanks for front-end advices
+* [Andrei Khegai](https://github.com/akhegai) - thanks for helping me with docker
