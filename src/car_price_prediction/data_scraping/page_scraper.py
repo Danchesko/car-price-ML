@@ -1,78 +1,57 @@
-import urllib
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-from tqdm import tqdm
-import pandas as pd
 import re
+from bs4 import BeautifulSoup
 from src.car_price_prediction.constants import Car
 
-PAGE_URL = "https://cars.kg/offers/%d.html"
 PARAMS_TO_CLEAN = [Car.YEAR, Car.MILEAGE, Car.CAPACITY, Car.POWER, Car.PRICE]
-failed_pages = []
-
-
-def get_scraped_dataset(start, stop):
-    """Start, stop arguments are arguments for building an url
-    path for scraping. Function returns scraped data in df and
-    failed pages addresses, so if needed you can scrape them again"""
-    cars_data = get_cars_data(start, stop)
-    df = pd.DataFrame(cars_data)
-    return df, failed_pages
-
-
-def get_cars_data(start, stop):
-    return (get_car_data(page) for page in tqdm(range(start, stop))
-            if get_car_data(page) is not None)
-
-
-def get_car_data(address):
-    page_contents = open_page(PAGE_URL % address)
-    if page_contents is not None:
-        return analyze_contents(page_contents)
-
-
-def open_page(page):
-    try:
-        page = urlopen(page)
-        page_contents = page.read().decode("utf-8")
-        return page_contents
-    except urllib.error.HTTPError:
-        # returns None if page doesn't exist
-        return None
-    except Exception as excpt:
-        failed_pages.append(page)
-        return None
 
 
 def analyze_contents(page_contents):
     soup = BeautifulSoup(page_contents, "html.parser")
-    data = get_car_info(soup.find_all("dl", "chars-item"))
-    data[Car.BRAND] = get_model(soup)
-    data[Car.PRICE] = get_price(soup)
-    return clean_info(data)
+    try:
+        data = clean_num_params(get_car_info(soup))
+    except Exception:
+        return None
+    return data
 
 
-def get_car_info(samples):
+def get_car_info(soup):
+    car_info = get_car_params(soup)
+    car_info[Car.BRAND] = get_brand(soup)
+    car_info[Car.PRICE] = get_price(soup)
+    car_info[Car.AD_DATE] = get_ad_date(soup)
+    car_info[Car.MODEL] = get_model(soup, car_info[Car.BRAND])
+    return car_info
+
+
+def get_car_params(soup):
     parameters = {}
-    for sample in samples:
-        parameter_name = sample.dt.text
-        parameter_value = sample.dt.find_next_sibling(
-            "dt").text.strip().lower()
-        parameters[parameter_name] = parameter_value
+    for sample in soup.find_all("dl", "chars-item"):
+        parameters[sample.dt.text] = (sample.dt.
+                  find_next_sibling("dt").text.strip().lower())
     return parameters
 
 
-def get_model(soup):
-    model = soup.find_all("li", "breadcrumbs-item")
-    return model[2].span.text.strip().lower()
+def get_brand(soup):
+    brand = soup.find_all("li", "breadcrumbs-item")
+    return brand[2].span.text.strip().lower()
 
 
 def get_price(soup):
-    price = soup.find('span', attrs={'class': 'card-price-main'}).text.strip()
-    return price
+    price = soup.find('span', attrs={'class': 'card-price-main'})
+    return price.text.strip()
 
 
-def clean_info(car_info):
+def get_model(soup, brand):
+    model = soup.find_all("div", "useful-links")[0].ul.li.find_next_sibling(
+        "li").a.text.strip().lower().split()[2:]
+    return " ".join(model).replace(brand, "").strip()
+
+
+def get_ad_date(soup):
+    return soup.find("div", "stat-date").text
+    
+
+def clean_num_params(car_info):
     params_to_clean = PARAMS_TO_CLEAN
     for param in params_to_clean:
         if param in car_info.keys():
