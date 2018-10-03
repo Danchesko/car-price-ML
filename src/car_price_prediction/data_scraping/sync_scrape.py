@@ -22,10 +22,16 @@ def get_cars_data(start, stop):
 
 
 def get_car_data(address):
-    page_contents = open_page(scrape_constants.PAGE_URL % address)
-    if page_contents is not None:
-        return page_scraper.analyze_contents(page_contents)
-
+    url = scrape_constants.PAGE_URL.format(address)
+    page_contents = open_page(url)
+    try:
+        car_data = page_scraper.analyze_contents(page_contents)
+        car_data[scrape_constants.URL_COL_NAME] = url
+        return car_data
+    except TypeError:
+        return None
+            
+            
 
 def open_page(page):
     try:
