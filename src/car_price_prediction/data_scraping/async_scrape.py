@@ -27,17 +27,18 @@ async def run(start, end):
 async def fetch(sem, url, session):
     async with sem:
         async with session.get(url) as response:
-            try:
+            if response.status ==200:
                 data = await response.read()
                 contents = analyze_contents(data.decode('utf-8'))
-                contents[scrape_constants.URL_COL_NAME] = url
-                return contents
-            except TypeError:
-                return None
+                if contents:
+                    contents[scrape_constants.Car.URL] = url
+                    return contents
+        
 
 
 if __name__=="__main__":
-    data = pd.DataFrame(list(filter(None, parse(700000,901000))))
-    writer = pd.ExcelWriter('../../../data/raw/new_raw_data.xlsx')
+    data = pd.DataFrame(list(filter(None, parse(904000,924000))))
+#    writer = pd.ExcelWriter('../../../data/raw/new_raw_data.xlsx')
+    writer = pd.ExcelWriter('new_raw_data.xlsx')
     data.to_excel(writer, 'Sheet1', index = False)
     writer.save()    
