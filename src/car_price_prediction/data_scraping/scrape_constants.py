@@ -1,6 +1,7 @@
 PAGE_URL = "https://cars.kg/offers/{}.html"
 
-class Car():
+
+class CarTemp():
     URL = "URL"
     PRICE = "Цена"
     MILEAGE = "Пробег"
@@ -18,4 +19,3 @@ class Car():
     MODEL = "Модель"
     PHOTO_URLS = "Фото"
     EXPIRED = "Активность"
-    

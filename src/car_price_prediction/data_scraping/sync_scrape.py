@@ -26,10 +26,9 @@ def get_car_data(address):
     page_contents = open_page(url)
     if page_contents:
         car_data = page_scraper.analyze_contents(page_contents)
-        car_data[scrape_constants.Car.URL] = url
+        car_data[scrape_constants.CarTemp.URL] = url
         return car_data
-            
-            
+
 
 def open_page(page):
     try:
