@@ -6,12 +6,13 @@ from src.car_price_prediction.data_scraping.page_scraper import analyze_contents
 
 failed_pages = []
 
+
 def get_scraped_dataset(start, end):
     """Start, stop arguments are arguments for building an url path
     for scraping. Function returns scraped data in df and list of
-    failed pages. This function is asynchoronous, you can customize
+    failed pages. This function is asynchronous, you can customize
     the number of semaphores, but considerations should be given"""
-    car_data= pd.DataFrame(list(filter(None, parse(start,end))))
+    car_data = pd.DataFrame(list(filter(None, parse(start, end))))
     return car_data, failed_pages
 
 
@@ -27,7 +28,7 @@ async def run(start, end):
     async with ClientSession() as session:
         for i in range(start, end):
             tasks.append(asyncio.ensure_future(fetch(
-                    sem, scrape_constants.PAGE_URL.format(i), session)))
+                sem, scrape_constants.PAGE_URL.format(i), session)))
         responses = asyncio.gather(*tasks)
         return await responses
 
@@ -40,5 +41,5 @@ async def fetch(sem, url, session):
                 contents = analyze_contents(data.decode('utf-8'))
                 contents[scrape_constants.CarTemp.URL] = url
                 return contents
-            elif (int(response.status/100)!=4):
+            elif (int(response.status / 100) != 4):
                 failed_pages.append(url)

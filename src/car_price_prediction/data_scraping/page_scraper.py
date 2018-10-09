@@ -19,8 +19,8 @@ def get_car_params(soup):
     parameters = {}
     try:
         for sample in soup.find_all("dl", "chars-item"):
-            parameters[sample.dt.text] = (sample.dt.
-                                          find_next_sibling("dt").text.strip().lower())
+            parameters[sample.dt.text] = (
+                sample.dt.find_next_sibling("dt").text.strip().lower())
         return parameters
     except (TypeError, AttributeError):
         return parameters
