@@ -10,9 +10,10 @@ failed_pages = []
 def get_scraped_dataset(start, stop):
     """Start, stop arguments are arguments for building an url
     path for scraping. Function returns scraped data in df and
-    failed pages addresses, so if needed you can scrape them again."""
-    cars_data = get_cars_data(start, stop)
-    df = pd.DataFrame(cars_data)
+    failed pages addresses, so if needed you can scrape them again.
+    There is also asynchornous function available, which scrapes 
+    much faster, but consideration should be given, when using it"""
+    df = pd.DataFrame(list(filter(None, get_cars_data(start,stop))))
     return df, failed_pages
 
 
