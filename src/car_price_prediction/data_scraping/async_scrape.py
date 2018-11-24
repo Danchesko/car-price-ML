@@ -24,7 +24,7 @@ def parse(start, end):
 
 async def run(start, end):
     tasks = []
-    sem = asyncio.Semaphore(500)
+    sem = asyncio.Semaphore(100)
     async with ClientSession() as session:
         for i in range(start, end):
             tasks.append(asyncio.ensure_future(fetch(
@@ -43,3 +43,9 @@ async def fetch(sem, url, session):
                 return contents
             elif (int(response.status / 100) != 4):
                 failed_pages.append(url)
+
+if __name__ == '__main__':
+    data, pages = get_scraped_dataset(900000,943630)
+    writer = pd.ExcelWriter('raw.xlsx', options={'strings_to_urls': False})
+    data.to_excel(writer, 'Sheet1', index = False)
+    writer.save()
