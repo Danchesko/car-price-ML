@@ -9,3 +9,4 @@ xlrd >= 0.9.0
 bs4
 aiohttp
 tqdm
+openpyxl
