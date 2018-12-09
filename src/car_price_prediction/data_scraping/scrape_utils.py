@@ -7,7 +7,8 @@ PARAMS_TO_CLEAN = [
     CarTemp.MILEAGE,
     CarTemp.CAPACITY,
     CarTemp.POWER,
-    CarTemp.PRICE]
+    CarTemp.PRICE
+    ]
 
 
 def clean_ad(car_info):

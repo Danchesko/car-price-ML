@@ -44,8 +44,8 @@ async def fetch(sem, url, session):
             elif (int(response.status / 100) != 4):
                 failed_pages.append(url)
 
-if __name__ == '__main__':
-    data, pages = get_scraped_dataset(900000,943630)
-    writer = pd.ExcelWriter('raw.xlsx', options={'strings_to_urls': False})
-    data.to_excel(writer, 'Sheet1', index = False)
-    writer.save()
+#if __name__ == '__main__':
+#    data, pages = get_scraped_dataset(900000,900100)
+#    writer = pd.ExcelWriter('raw.xlsx', options={'strings_to_urls': False})
+#    data.to_excel(writer, 'Sheet1', index = False)
+#    writer.save()

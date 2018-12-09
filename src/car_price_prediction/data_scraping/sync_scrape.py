@@ -37,6 +37,6 @@ def open_page(page):
         return page_contents
     except urllib.error.HTTPError:
         return None
-    except Exception as excpt:
+    except Exception:
         failed_pages.append(page)
         return None
