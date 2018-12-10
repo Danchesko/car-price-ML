@@ -29,8 +29,9 @@ def save_processed_dataset(dataset):
 
 
 def save_dataset(dataset, path):
-    writer = pd.ExcelWriter(path)
+    writer = pd.ExcelWriter(path, options={'strings_to_urls': False})
     dataset.to_excel(writer, "Sheet1", encoding=ENCODING_XLSX, index=False)
+    writer.save()
 
 
 def read_excel(path):
