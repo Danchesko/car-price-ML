@@ -1,20 +1,22 @@
-rename_cols= {'URL':'Url',
-'Активность':'Expiration',
-'Год выпуска':'Year',
-'Дата рекламы':'Publication',
-'КПП':'Transmission',
-'Марка':'Brand',
-'Модель':'Model',
-'Мощность':'Power',
-'Объём':'Capacity',
-'Привод':'Drive',
-'Пробег':'Mileage',
-'Руль':'Wheel',
-'Тип кузова':'Carcass',
-'Топливо':'Fuel',
-'Фото':'Photo_Urls',
-'Цвет':'Color',
-'Цена':'Price'}
+rename_cols= {
+    'URL':'Url',
+    'Активность':'Expiration',
+    'Год выпуска':'Year',
+    'Дата рекламы':'Publication',
+    'КПП':'Transmission',
+    'Марка':'Brand',
+    'Модель':'Model',
+    'Мощность':'Power',
+    'Объём':'Capacity',
+    'Привод':'Drive',
+    'Пробег':'Mileage',
+    'Руль':'Wheel',
+    'Тип кузова':'Carcass',
+    'Топливо':'Fuel',
+    'Фото':'Photo_Urls',
+    'Цвет':'Color',
+    'Цена':'Price'
+}
 
 class Car():
     MAX_PRICE = 250000
