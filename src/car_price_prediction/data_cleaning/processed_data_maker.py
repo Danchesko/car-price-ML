@@ -1,37 +1,46 @@
+import datetime
+
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.utils import shuffle
-from src.car_price_prediction.constants import Car
+
+
+DROP_NA_COLUMNS = [
+    'Year',
+    'Transmission',
+    'Capacity',
+    'Drive',
+    'Wheel',
+    'Carcass'
+    ]
 
 DROP_COLUMNS = [
-    Car.YEAR,
-    Car.TRANSMISSION,
-    Car.CAPACITY,
-    Car.DRIVE,
-    Car.WHEEL,
-    Car.CARCASS]
+        'Power', 
+        'Url', 
+        'Photo_Urls'
+        ]
+
 IMPUTE_VALUE = "другое"
 
 
-def get_processed_data(data, should_shuffle=True, random_seed=0):
+def get_processed_data(data):
     df = data.copy()
+    df = modify_date(df)
     df = drop_features(df)
     df = impute_features(df)
-    df = change_year_type(df)
-    if should_shuffle:
-        df = shuffle_data(df, random_seed)
     return df
 
 
-def shuffle_data(df, random_seed):
-    df = shuffle(df, random_state=random_seed)
+def modify_date(df):
+    df.Publication = pd.to_datetime(df.Publication)
+    hard_date = datetime.date(2017, 1, 1)
+    df.Publication = df.Publication.apply(lambda x: (x.date() - hard_date).days)
     return df
 
 
 def drop_features(df):
-    df = df.drop(columns=[Car.POWER])
+    df = df.drop(columns=DROP_COLUMNS)
     df = df.dropna(thresh=6)
-    df = df.dropna(subset=DROP_COLUMNS)
+    df = df.dropna(subset=DROP_NA_COLUMNS)
     df = df.drop_duplicates()
     return df
 
@@ -39,44 +48,43 @@ def drop_features(df):
 def impute_features(df):
     df = impute_color(df)
     df = impute_fuel(df)
-    df = knn_impute_mileage(df)
-    return df
-
-
-def change_year_type(df):
-    df[Car.YEAR] = df[Car.YEAR].astype(int)
+    df = impute_model(df)
+    df = rf_impute_mileage(df)
     return df
 
 
 def impute_color(df):
-    df[[Car.COLOR]] = df[[Car.COLOR]].fillna(value=IMPUTE_VALUE)
+    df[['Color']] = df[['Color']].fillna(value=IMPUTE_VALUE)
     return df
 
 
 def impute_fuel(df):
-    df[[Car.FUEL]] = df[[Car.FUEL]].fillna(value=IMPUTE_VALUE)
+    df[['Fuel']] = df[['Fuel']].fillna(value=IMPUTE_VALUE)
+    return df
+
+def impute_model(df):
+    df[['Model']] = df[['Model']].fillna(value=IMPUTE_VALUE)
     return df
 
 
-def knn_impute_mileage(df):
+def rf_impute_mileage(df):
     df = check_nans(df)
     cols = get_cols(df)
-    X_train, X_test, y_train, y_test = get_train_test(
-        df, cols, Car.MILEAGE)
+    X_train, X_test, y_train, y_test = get_train_test(df, cols, 'Mileage')
     y_pred = get_y_pred(X_train, X_test, y_train, y_test)
     y_pred = pd.Series(y_pred, index=y_test.index, name=y_test.name)
-    df.loc[df[~df[Car.MILEAGE].notnull()].index,
-           Car.MILEAGE] = y_pred
+    df.loc[df[~df.Mileage.notnull()].index, 'Mileage'] = y_pred
     return df
 
 
 def check_nans(df):
-    df.loc[:, df.columns != Car.MILEAGE].dropna(inplace=True)
+    df.loc[:, df.columns != 'Mileage'].dropna(inplace=True)
     return df
 
 
 def get_cols(df):
-    cols = df.loc[:, df.columns != Car.MILEAGE].columns
+    cols = list(df.loc[:, df.columns != 'Mileage'].columns)
+    cols.remove('Price')
     return cols
 
 
@@ -84,8 +92,8 @@ def get_train_test(df, df_columns, target):
     X_train, y_train = get_train(df, df_columns, target)
     X_test, y_test = get_test(df, df_columns, target)
     missing_cols = set(X_train.columns) - set(X_test.columns)
-    for c in missing_cols:
-        X_test[c] = 0
+    for cols in missing_cols:
+        X_test[cols] = 0
     X_test = X_test[X_train.columns]
     return X_train, X_test, y_train, y_test
 
