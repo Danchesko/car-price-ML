@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+
 from src.car_price_prediction.data_cleaning import cleaning_constants
 from src.car_price_prediction.data_cleaning.cleaning_constants import Car
 
@@ -6,19 +8,20 @@ from src.car_price_prediction.data_cleaning.cleaning_constants import Car
 def get_clean_data(data):
     df = data.copy()
     df = df.rename(columns = cleaning_constants.rename_cols)
+    df = prepare_data_for_cleaning(df)
     df = get_no_outliers_data(df)
     return df
     
-    
-def get_no_outliers_data(df):
-    df = make_empties_nan(df)
-    df = drop_data(df)
-    df = replace_outliers(df)
+
+def prepare_data_for_cleaning(df):
+    df = df.replace(to_replace="", value=np.nan)
+    df.Capacity = pd.to_numeric(df.Capacity, errors = 'coerce')
     return df
 
-
-def make_empties_nan(df):
-    df = df.replace(to_replace="", value=np.nan)
+    
+def get_no_outliers_data(df):
+    df = drop_data(df)
+    df = replace_outliers(df)
     return df
 
 
