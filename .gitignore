@@ -3,4 +3,4 @@ __pycache__
 .DS_Store
 
 *.xlsx
-!raw_data.xlsx
+!*raw_data.xlsx
