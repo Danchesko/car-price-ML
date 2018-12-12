@@ -1,5 +1,3 @@
-import datetime
-
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 
@@ -16,7 +14,8 @@ DROP_NA_COLUMNS = [
 DROP_COLUMNS = [
         'Power', 
         'Url', 
-        'Photo_Urls'
+        'Photo_Urls',
+        'Expiration'
         ]
 
 IMPUTE_VALUE = "другое"
@@ -32,8 +31,7 @@ def get_processed_data(data):
 
 def modify_date(df):
     df.Publication = pd.to_datetime(df.Publication)
-    hard_date = datetime.date(2017, 1, 1)
-    df.Publication = df.Publication.apply(lambda x: (x.date() - hard_date).days)
+    df.Publication = df.Publication.apply(lambda x: (x.date().toordinal()))
     return df
 
 
