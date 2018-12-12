@@ -58,7 +58,7 @@ def save_datasets(raw_data, dropped_data, ready_data):
 
 
 def manage_models(data):
-    best_params = model_tuner.get_grid_best_params(data)
+    best_params = model_tuner.get_grid_best_params(data, check_model=True)
     model_manager.save_best_forest_parameter(best_params)
     estimator = model_trainer.train_model(data, best_params)
     model_manager.save_trained_forest_estimator(estimator)
