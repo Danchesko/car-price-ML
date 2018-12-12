@@ -1,12 +1,20 @@
 import json
+from io import StringIO
+
 from flask import Flask, request, render_template, send_from_directory, make_response
-from src.app import api_service
+
+from src.car_price_prediction.model.model_predictor import Predictor
+from src.car_price_prediction.utils import dataset_manager
+
+
 
 app = Flask(__name__)
+predictor = Predictor()
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/js/<path:path>')
 def serve_js(path):
@@ -17,14 +25,16 @@ def serve_js(path):
 def prediction():
     if request.method == 'POST':
         data_for_prediction = json.loads(request.data)
-        response = str(api_service.get_prediction(data_for_prediction))
+        response = str(predictor.predict(data_for_prediction).pop())
         return response
 
 
 @app.route('/api/v1/cars')
 def get_cars():
-        data = api_service.get_cars()
-        response = make_response(data.getvalue())
+        df = dataset_manager.get_cleaned_outliers_dataset()
+        byte_data = StringIO()
+        df.to_csv(byte_data)
+        response = make_response(byte_data.getvalue())
         response.headers['Content-Disposition'] = "attachment; filename=cars.csv"
         response.headers['Content-type'] = 'text/csv'
         return response
