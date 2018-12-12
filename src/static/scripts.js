@@ -6,7 +6,7 @@ function makePrediction(body) {
         },
         body: JSON.stringify(body)
     }
-    return fetch(`${window.location.origin}/api/prediction`, options)
+    return fetch(`${window.location.origin}/api/v1/prediction`, options)
 }
 
 const submitButton = document.querySelector('button[type="submit"]');
