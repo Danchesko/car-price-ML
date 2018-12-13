@@ -1,4 +1,4 @@
-name: car_server
+name: car-prediction
 channels:
   - defaults
 dependencies:
@@ -46,5 +46,5 @@ dependencies:
     - werkzeug==0.14.1
     - xlrd==1.1.0
     - yarl==1.3.0
-prefix: /anaconda3/envs/car_server
+prefix: /anaconda3/envs/car-prediction
 
