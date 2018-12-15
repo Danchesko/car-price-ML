@@ -38,5 +38,3 @@ function enableButton(button) {
 const inputNameToValue = select => ({ [select.id]: select.value })
 const toOneObject = (total, obj) => (Object.assign(total, obj))
 const getInputValues = () => Array.from(document.querySelectorAll('select,input[type=text],input[type=number]')).map(inputNameToValue).reduce(toOneObject, {})
-
-

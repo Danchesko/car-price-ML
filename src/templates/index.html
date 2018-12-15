@@ -2,12 +2,12 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-    crossorigin="anonymous">
-
     <title>Car price prediction</title>
     <meta name="description" content="Car price prediction">
-    <meta name="author" content="Daniiar Berdikulov">
+    <meta name="author" content="Daniiar Berdikulov">  
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
 </head>
 
 
@@ -15,7 +15,7 @@
     <div style="width: 500px; margin: 0 auto;">
         <h1> Оценка стоимости машины в Кыргызстане (based on AI)</h1>
         <br>
-        <form action="" method="post" novalidate>
+        <form onsubmit="onSubmitClick(event)">
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.brand.label }}<br>
@@ -57,8 +57,10 @@
                 {{ form.transmission.label }}<br>
                 {{ form.transmission(class_="form-control") }}
             </div>
-            {{ form.submit(class_='btn btn-primary')}}
+            <button type="submit" class="btn btn-primary">Предсказание</button>
         </form>
+        <h2 id='answer'/>
     </div>
+    <script src="js/scripts.js"></script>
 </body>
         
