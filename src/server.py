@@ -1,5 +1,6 @@
 import json
 from io import StringIO
+from datetime import datetime
 
 from flask import Flask, request, render_template, send_from_directory, make_response
 
@@ -9,23 +10,30 @@ from app.config import Config
 from app.prediction_form import PredictionForm
 
 
-
 app = Flask(__name__)
 app.config.from_object(Config)
 predictor = Predictor()
+
 
 @app.route('/')
 def index():
 	form = PredictionForm()
 	return render_template('index.html', form=form)
+	
+	
+@app.route('/js/<path:path>')
+def serve_js(path):
+    return send_from_directory('static', path)
 
 
-@app.route('/api/v1/prediction', methods=['POST'])
+@app.route('/api/v1/prediction', methods=['POST', 'GET'])
 def prediction():
-    if request.method == 'POST':
-        data_for_prediction = json.loads(request.data)
-        response = str(predictor.predict(data_for_prediction).pop())
-        return response
+	if request.method == 'POST':
+		data_for_prediction = json.loads(request.data)
+		data_for_prediction['publication'] = datetime.now().strftime('%d-%m-%Y')
+		data_for_prediction['model'] = 'другое'
+		response = str(predictor.predict(data_for_prediction).pop())
+		return response
 
 
 @app.route('/api/v1/cars')
@@ -40,4 +48,4 @@ def get_cars():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug = True)
+	app.run(host="0.0.0.0", debug=True)
