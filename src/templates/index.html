@@ -19,7 +19,11 @@
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.brand.label }}<br>
-                {{ form.brand(class_="form-control") }}
+                {{ form.brand(class_="form-control", id='brand') }}
+            </div>
+            <div class="form-group" id="models-group" hidden>
+                {{ form.model.label }}<br>
+                {{ form.model(class_="form-control", id='model') }}
             </div>
             <div class="form-group">
                 {{ form.year.label }}<br>
