@@ -1,23 +1,22 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField, IntegerField, FloatField, validators
-import pandas as pd
 
-from src.car_price_prediction.utils.dataset_manager import get_cleaned_outliers_dataset
 
-data = get_cleaned_outliers_dataset()
-
-ALTERNATIVE_OPTION = 'другое'
 
 class PredictionForm(FlaskForm):
-
-    brand = SelectField('Марка', choices=sorted([(brand, brand.capitalize()) for brand in data.Brand.unique()]), default = 'toyota')
+    from src.server import data_service
+    brand = SelectField('Марка', [validators.Required()], choices=data_service.get_brands(), default = data_service.DEFAULT_VALUE)
+    model = SelectField('Модель',choices=[])
     year = IntegerField('Год выпуска',  [validators.DataRequired()])
     mileage = IntegerField('Пробег')
     capacity = FloatField('Объем')
-    wheel = SelectField('Руль', choices=[(wheel, wheel.capitalize()) for wheel in data.Wheel.dropna().unique()])
-    fuel = SelectField('Тип топлива', choices=[(fuel, fuel.capitalize()) for fuel in data.Fuel.fillna(ALTERNATIVE_OPTION).unique()], default = ALTERNATIVE_OPTION)
-    color = SelectField('Цвет', choices=[(color, color.capitalize()) for color in data.Color.fillna(ALTERNATIVE_OPTION).unique()], default = ALTERNATIVE_OPTION)
-    carcass = SelectField('Тип кузова ', choices=[(carcass, carcass.capitalize()) for carcass in data.Carcass.dropna().unique()])
-    drive = SelectField('Привод ', choices=[(drive, drive.capitalize()) for drive in data.Drive.dropna().unique()])
-    transmission = SelectField('Привод ', choices=[(transmission, transmission.capitalize()) for transmission in data.Transmission.dropna().unique()])
-    submit = SubmitField('Предсказание')
+    wheel = SelectField('Руль', choices=data_service.get_wheel_types(), default = 'левый')
+    fuel = SelectField('Тип топлива', choices=data_service.get_fuel_types(), default = 'бензин')
+    color = SelectField('Цвет', choices=data_service.get_colors(), default = 'белый')
+    carcass = SelectField('Тип кузова ', choices=data_service.get_carcass_types())
+    drive = SelectField('Привод ', choices=data_service.get_drive_types())
+    transmission = SelectField('Привод ', choices=data_service.get_transmission_types())
+
+
+        
+    
