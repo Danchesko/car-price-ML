@@ -7,17 +7,21 @@ from flask import Flask, request, render_template, send_from_directory, make_res
 from src.car_price_prediction.model.model_predictor import Predictor
 from src.car_price_prediction.utils import dataset_manager
 from app.config import Config
-from app.prediction_form import PredictionForm
+from app.data_service import DataService
+from app import prediction_form
+
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
-predictor = Predictor()
+# predictor = Predictor()
+data = dataset_manager.get_cleaned_outliers_dataset()
+data_service = DataService(data)
 
 
 @app.route('/')
 def index():
-	form = PredictionForm()
+	form = prediction_form.PredictionForm()
 	return render_template('index.html', form=form)
 	
 	
@@ -45,6 +49,11 @@ def get_cars():
 	response.headers['Content-Disposition'] = "attachment; filename=cars.csv"
 	response.headers['Content-type'] = 'text/csv'
 	return response
+
+@app.route('/api/v1/models', methods=['GET'])
+def get_models():
+    brand = request.args.get('brand')
+    return json.dumps(['test1', 'test2', 'test3'])
 
 
 if __name__ == '__main__':
