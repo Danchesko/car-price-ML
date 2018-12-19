@@ -5,10 +5,13 @@ const modelsGroupField = document.getElementById('models-group');
 const answerField = document.getElementById('answer');
 
 const populateModels = models => {
+  modelsField.innerHTML = ''
   models.forEach(model => {
     const element = document.createElement('option');
-    element.innerHTML = model;
+    element.innerHTML = model[1];
+    element.value=model[0];
     modelsField.appendChild(element)
+
   })
 };
 
