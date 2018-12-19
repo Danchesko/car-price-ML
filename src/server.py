@@ -11,12 +11,10 @@ from app.data_service import DataService
 from app import prediction_form
 
 
-
 app = Flask(__name__)
 app.config.from_object(Config)
-# predictor = Predictor()
-data = dataset_manager.get_cleaned_outliers_dataset()
-data_service = DataService(data)
+predictor = Predictor()
+data_service = DataService(dataset_manager.get_cleaned_outliers_dataset())
 
 
 @app.route('/')
@@ -53,8 +51,8 @@ def get_cars():
 @app.route('/api/v1/models', methods=['GET'])
 def get_models():
     brand = request.args.get('brand')
-    return json.dumps(['test1', 'test2', 'test3'])
+    return json.dumps(data_service.get_models(brand))
 
 
 if __name__ == '__main__':
-	app.run(host="0.0.0.0", debug=True)
+	app.run(host="0.0.0.0")
