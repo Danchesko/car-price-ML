@@ -15,7 +15,7 @@ from app import prediction_form
 app = Flask(__name__)
 app.config.from_object(Config)
 predictor = Predictor()
-data =  get_clean_data(dataset_manager.get_raw_dataset())
+data = dataset_manager.get_cleaned_outliers_dataset()
 data_service = DataService(data)
 
 
@@ -35,20 +35,19 @@ def prediction():
 	if request.method == 'POST':
 		data_for_prediction = json.loads(request.data)
 		data_for_prediction['publication'] = datetime.now().strftime('%d-%m-%Y')
-		data_for_prediction['model'] = 'другое'
 		response = str(predictor.predict(data_for_prediction).pop())
 		return response
 
 
 @app.route('/api/v1/cars')
 def get_cars():
-	df = dataset_manager.get_cleaned_outliers_dataset()
 	byte_data = StringIO()
-	df.to_csv(byte_data)
+	data.to_csv(byte_data)
 	response = make_response(byte_data.getvalue())
 	response.headers['Content-Disposition'] = "attachment; filename=cars.csv"
 	response.headers['Content-type'] = 'text/csv'
 	return response
+
 
 @app.route('/api/v1/models', methods=['GET'])
 def get_models():
