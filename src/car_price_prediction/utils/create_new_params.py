@@ -34,7 +34,7 @@ def load_raw_dataset():
     data = dataset_manager.get_raw_dataset()
     if data is None:
         print(messages.SCRAPING_STARTED_MESSAGE)
-        data, failed_pages = sync_scrape.get_scraped_dataset(700000, 930000)
+        data, failed_pages = sync_scrape.get_scraped_dataset(700000, 950000)
         print(messages.num_of_failed_pages(failed_pages))
     else:
         print(messages.SCRAPING_DATA_FOUND_MESSAGE)
@@ -64,5 +64,5 @@ def manage_models(data):
     model_manager.save_trained_forest_estimator(estimator)
 
 # Uncomment, if you are going to use
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
