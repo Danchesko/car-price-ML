@@ -15,7 +15,7 @@ class PredictionForm(FlaskForm):
     color = SelectField('Цвет', choices=data_service.get_colors(), default = 'белый')
     carcass = SelectField('Тип кузова ', choices=data_service.get_carcass_types())
     drive = SelectField('Привод ', choices=data_service.get_drive_types())
-    transmission = SelectField('Привод ', choices=data_service.get_transmission_types())
+    transmission = SelectField('Коробка передач ', choices=data_service.get_transmission_types())
 
 
         
