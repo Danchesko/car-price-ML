@@ -3,7 +3,6 @@ from wtforms import SelectField, SubmitField, IntegerField, FloatField, validato
 from wtforms.widgets import Input
 
 
-
 class PredictionForm(FlaskForm):
     from src.server import data_service
     brand = SelectField('Марка', [validators.InputRequired()], choices=data_service.get_brands(), default = data_service.DEFAULT_VALUE)
