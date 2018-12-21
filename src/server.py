@@ -10,14 +10,16 @@ from src.car_price_prediction.utils import dataset_manager
 from src.app.config import Config
 from src.app.data_service import DataService
 
-
-data_service = DataService(dataset_manager.get_cleaned_outliers_dataset())
+data = dataset_manager.get_cleaned_outliers_dataset()
+data_service = DataService(data)
 
 from src.app import prediction_form
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
 predictor = Predictor()
+
 
 @app.route('/')
 def index():
