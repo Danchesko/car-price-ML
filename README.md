@@ -38,12 +38,12 @@ Since there is no one strict entry point, and you can use different parts, for d
 
 Linux/MacOS:
 ```
-export PYTHONPATH $PROJ_ROOT
+export PYTHONPATH=$PROJ_ROOT
 ```
 
 Windows:
 ```
-set PYTHONPATH %PROJ_ROOT%
+set PYTHONPATH=%PROJ_ROOT%
 ```
 
 ## Authors
