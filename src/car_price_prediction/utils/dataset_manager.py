@@ -1,5 +1,6 @@
 import pandas as pd
 from src.car_price_prediction.utils import paths
+from sklearn.utils import shuffle
 
 ENCODING_XLSX = "utf-8-sig"
 
@@ -35,4 +36,4 @@ def save_dataset(dataset, path):
 
 
 def read_excel(path):
-    return pd.read_excel(path)
+    return shuffle(pd.read_excel(path))
