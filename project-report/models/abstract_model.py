@@ -27,7 +27,7 @@ class Model(ABC):
         with open(path_for_pickle + path, 'rb') as lfile:
             self.regressor = pickle.load(lfile)
 
-    def cv_score(self, X, y):
+    def cv_score(self, X, y, cv=3):
         return (
             "CV MAE score for %s: %.3f" %
             (self.name,
@@ -35,4 +35,5 @@ class Model(ABC):
                  self.regressor,
                  X,
                  y,
+                 cv=cv,
                  scoring="neg_mean_absolute_error").mean()))
