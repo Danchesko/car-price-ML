@@ -6,7 +6,6 @@ from src.car_price_prediction.utils import dataset_manager, messages, model_mana
 from src.car_price_prediction.data_cleaning import data_cleaner, processed_data_maker
 from src.car_price_prediction.model import model_tuner, model_trainer
 
-
 def main():
     """Creates parameters for predicting, if there is none,
     or in case, predictions are deprecated, this script will overwrite
@@ -64,5 +63,5 @@ def manage_models(data):
     model_manager.save_trained_forest_estimator(estimator)
 
 # Uncomment, if you are going to use
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
