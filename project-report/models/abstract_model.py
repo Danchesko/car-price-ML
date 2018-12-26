@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import pickle
-from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import cross_val_score
 
 path_for_pickle = "../models/"
@@ -36,4 +35,4 @@ class Model(ABC):
                  X,
                  y,
                  cv=cv,
-                 scoring="neg_mean_absolute_error").mean()))
+                 scoring='neg_mean_absolute_error').mean()))
