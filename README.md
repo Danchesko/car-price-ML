@@ -52,5 +52,4 @@ set PYTHONPATH=%PROJ_ROOT%
 
 ## Acknowledgments
 
-* [Esen Dzhailobaev](https://github.com/s7b5en) - thanks for front-end advices
-* [Andrei Khegai](https://github.com/akhegai) - thanks for helping me with docker
+* [Esen Dzhailobaev](https://github.com/s7b5en), [Andrei Khegai](https://github.com/akhegai) - thanks for front-end advices
