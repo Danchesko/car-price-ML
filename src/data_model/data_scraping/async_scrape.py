@@ -1,8 +1,9 @@
 import asyncio
 import pandas as pd
 from aiohttp import ClientSession
-from src.car_price_prediction.data_scraping import scrape_constants
-from src.car_price_prediction.data_scraping.page_scraper import analyze_contents
+
+from . import scrape_constants
+from . import analyze_contents
 
 failed_pages = []
 

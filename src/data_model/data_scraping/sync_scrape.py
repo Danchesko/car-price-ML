@@ -1,8 +1,10 @@
-from tqdm import tqdm
 import urllib
-import pandas as pd
 from urllib.request import urlopen
-from src.car_price_prediction.data_scraping import page_scraper, scrape_constants
+
+from tqdm import tqdm
+import pandas as pd
+
+from . import page_scraper, scrape_constants
 
 failed_pages = []
 

@@ -1,5 +1,5 @@
 import re
-from src.car_price_prediction.data_scraping.scrape_constants import CarTemp
+from .scrape_constants import CarTemp
 
 
 PARAMS_TO_CLEAN = [

@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
-from src.car_price_prediction.data_scraping import scrape_utils
-from src.car_price_prediction.data_scraping.scrape_constants import CarTemp
+
+from . import scrape_utils
+from .scrape_constants import CarTemp
 
 
 def analyze_contents(page_contents):
