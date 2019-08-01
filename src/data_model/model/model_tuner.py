@@ -1,8 +1,9 @@
-from src.car_price_prediction.utils import df_utils
-from src.car_price_prediction.model import configs
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_absolute_error, r2_score
+
+from src.data_model.utils import df_utils
+from src.data_model.model import configs
 
 
 def get_grid_best_params(data, check_model=False):

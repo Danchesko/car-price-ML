@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 
-from src.car_price_prediction.data_cleaning import cleaning_constants
-from src.car_price_prediction.data_cleaning.cleaning_constants import Car
+from . import cleaning_constants
+from .cleaning_constants import Car
 
 
 def get_clean_data(data):

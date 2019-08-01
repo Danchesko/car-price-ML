@@ -1,10 +1,10 @@
 import pandas as pd
 # disallow pandas to throw warnings
 pd.options.mode.chained_assignment = None
-from src.car_price_prediction.data_scraping import sync_scrape
-from src.car_price_prediction.utils import dataset_manager, messages, model_manager
-from src.car_price_prediction.data_cleaning import data_cleaner, processed_data_maker
-from src.car_price_prediction.model import model_tuner, model_trainer
+from src.data_model.data_scraping import sync_scrape
+from src.data_model.utils import dataset_manager, messages, model_manager
+from src.data_model.data_cleaning import data_cleaner, processed_data_maker
+from src.data_model.model import model_tuner, model_trainer
 
 def main():
     """Creates parameters for predicting, if there is none,

@@ -1,4 +1,4 @@
-from src.car_price_prediction.utils import paths
+from . import paths
 import pickle
 
 def get_best_forest_parameter():

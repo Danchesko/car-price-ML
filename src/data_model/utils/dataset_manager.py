@@ -1,6 +1,7 @@
 import pandas as pd
-from src.car_price_prediction.utils import paths
 from sklearn.utils import shuffle
+
+from . import paths
 
 ENCODING_XLSX = "utf-8-sig"
 

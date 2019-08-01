@@ -3,7 +3,7 @@ import pandas as pd
 from aiohttp import ClientSession
 
 from . import scrape_constants
-from . import analyze_contents
+from .page_scraper import analyze_contents
 
 failed_pages = []
 

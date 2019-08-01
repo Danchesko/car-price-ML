@@ -1,4 +1,4 @@
-from src.car_price_prediction.utils import dataset_manager, model_manager, df_utils, json_manager
+from src.data_model.utils import dataset_manager, model_manager, df_utils, json_manager
 
 
 class Predictor:

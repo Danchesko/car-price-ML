@@ -1,6 +1,7 @@
-from src.car_price_prediction.utils import df_utils
 from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
+
+from src.data_model.utils import df_utils
 
 
 def train_model(data, params):

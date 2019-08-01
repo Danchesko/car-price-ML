@@ -42,3 +42,8 @@ def open_page(page):
     except Exception:
         failed_pages.append(page)
         return None
+
+
+
+if __name__ == "__main__":
+    print(get_scraped_dataset(1000000,1000010))
