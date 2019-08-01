@@ -4,5 +4,6 @@ __pycache__
 env
 .vscode
 .env
-data/
-!data/raw/
+*.xlsx
+!data/raw/*
+
