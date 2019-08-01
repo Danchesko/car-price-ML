@@ -4,16 +4,16 @@ from datetime import datetime
 
 from flask import Flask, request, render_template, send_from_directory, make_response
 
-from src.car_price_prediction.data_cleaning.data_cleaner import get_clean_data
-from src.car_price_prediction.model.model_predictor import Predictor
-from src.car_price_prediction.utils import dataset_manager
-from src.app.config import Config
-from src.app.data_service import DataService
+from src.data_model.data_cleaning.data_cleaner import get_clean_data
+from src.data_model.model.model_predictor import Predictor
+from src.data_model.utils import dataset_manager
+from src.server.app.config import Config
+from src.server.app.data_service import DataService
 
 data = dataset_manager.get_cleaned_outliers_dataset()
 data_service = DataService(data)
 
-from src.app import prediction_form
+from src.server.app import prediction_form
 
 
 app = Flask(__name__)

@@ -4,7 +4,7 @@ from wtforms.widgets import Input
 
 
 class PredictionForm(FlaskForm):
-    from src.server import data_service
+    from src.server.server import data_service
     brand = SelectField('Марка', [validators.InputRequired()], choices=data_service.get_brands(), default = data_service.DEFAULT_VALUE)
     model = SelectField('Модель',[validators.InputRequired()], choices=[])
     year = IntegerField('Год выпуска', [validators.InputRequired()], widget=Input('number'))
